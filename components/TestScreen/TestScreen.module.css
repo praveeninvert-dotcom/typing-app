@@ -1,0 +1,32 @@
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+/* Hidden input: must remain in tab order — use position/opacity/size, NOT display:none */
+.hiddenInput {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.textDisplayContainer {
+  max-width: 800px;
+  width: 100%;
+}
+
+.escapeHint {
+  font-family: var(--font-press-start);
+  font-size: 8px;
+  color: var(--color-amber-dim);
+  opacity: 0.4;
+  margin-top: 2rem;
+  margin-bottom: 0;
+}
