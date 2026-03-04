@@ -92,7 +92,7 @@ Each task was committed atomically:
 3. **Task 3: useTypingEngine end-of-word guard (found during checkpoint verification)** - `f5a95bd` (fix)
 
 **Plan metadata:** `04e3421` (docs: complete app shell and axe-core accessibility plan — prior to checkpoint)
-**Post-checkpoint metadata:** (docs commit to follow)
+**Post-checkpoint metadata:** `89c326e` (docs: complete app shell and axe-core accessibility plan — post-checkpoint)
 
 ## Files Created/Modified
 - `app/globals.css` - Tailwind directives, 9 CSS custom properties, CRT scanlines + vignette, retro focus/button reset
