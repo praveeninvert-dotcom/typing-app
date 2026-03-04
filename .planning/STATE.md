@@ -11,9 +11,9 @@
 ## Current Position
 
 **Phase:** 1 of 3 — Foundation + Core Typing Engine
-**Current Plan:** 5 of 7 (01-05-PLAN.md next)
+**Current Plan:** 6 of 7 (01-06-PLAN.md next)
 **Status:** In Progress
-**Progress:** [███████░░░] 67%
+**Progress:** [████████░░] 76%
 
 ---
 
@@ -31,6 +31,9 @@
 10. React.memo on CharSpan and WordSpan prevents re-rendering entire word list on every keypress — only active/changed word re-renders.
 11. opacity:0/opacity:1 toggle for StatsBar (not display:none) — CLAUDE.md requires height always reserved so no layout shift on first keypress.
 12. CSS cursor blink uses step-end timing function — produces crisp on/off blink matching terminal aesthetic, no easing needed.
+13. TypingApp renders ResultOverlay as full-page replacement (not modal overlay) in Phase 1 — Phase 3 adds true overlay via AnimatePresence.
+14. HomeScreen manages selectedDifficulty internally (not lifted to TypingApp) — TypingApp only needs difficulty when Start is pressed.
+15. engineRef pattern in TestScreen: countdown.onComplete captures stale engine state; useRef updated each render ensures latest correctChars available at timer expiry.
 
 ---
 
@@ -49,5 +52,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-04
-Stopped at: Completed 01-04-PLAN.md — DifficultySelector, StatsBar, TextDisplay display components done
-Resume file: .planning/phases/01-foundation-core-typing-engine/01-05-PLAN.md
+Stopped at: Completed 01-05-PLAN.md — ResultOverlay, HomeScreen, TestScreen, TypingApp assembled; full typing test loop complete
+Resume file: .planning/phases/01-foundation-core-typing-engine/01-06-PLAN.md

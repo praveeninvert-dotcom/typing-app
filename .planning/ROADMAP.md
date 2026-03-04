@@ -38,14 +38,14 @@ Exit criteria: Select difficulty. Start. Type. Characters color correctly.
 Backspace within word. Space advances. Timer counts to zero. Result shows WPM and accuracy.
 Retry and Home work. Tab navigation works. axe-core passes.
 
-**Plans:** 3/6 plans executed
+**Plans:** 5/6 plans executed
 
 Plans:
 - [x] 01-01-PLAN.md — Project scaffold + types, constants, word lists, generateText (DONE: 44ecc11, 0f7876a)
 - [x] 01-02-PLAN.md — useCountdown hook + useKeystrokeSound stub (DONE: 95af7a3, baf730f)
 - [x] 01-03-PLAN.md — useTypingEngine TDD (typing state machine) (DONE: 32d4b65, 61dd363)
-- [ ] 01-04-PLAN.md — DifficultySelector, StatsBar, TextDisplay components
-- [ ] 01-05-PLAN.md — ResultOverlay, HomeScreen, TestScreen, TypingApp
+- [x] 01-04-PLAN.md — DifficultySelector, StatsBar, TextDisplay components (DONE: eb1ed34, f64b4bd)
+- [x] 01-05-PLAN.md — ResultOverlay, HomeScreen, TestScreen, TypingApp (DONE: 7a852ca, fdcbc2e)
 - [ ] 01-06-PLAN.md — App shell (globals.css, layout.tsx, page.tsx) + axe-core verification
 
 ---
@@ -104,6 +104,6 @@ Focus trapped in both overlays. Enter on result triggers Retry.
 
 ## Phase Status
 
-Phase 1: In Progress (3 of 6 plans complete)
+Phase 1: In Progress (5 of 6 plans complete)
 Phase 2: Planned
 Phase 3: Planned
