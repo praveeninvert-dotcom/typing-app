@@ -1,0 +1,75 @@
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.titleRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+}
+
+.title {
+  font-family: var(--font-press-start);
+  font-size: clamp(24px, 4vw, 40px);
+  color: var(--color-amber);
+  margin: 0;
+}
+
+.cursor {
+  display: inline-block;
+  color: var(--color-amber);
+  animation: blink 600ms step-end infinite;
+  font-family: var(--font-press-start);
+  font-size: clamp(24px, 4vw, 40px);
+  line-height: 1;
+}
+
+.subtitle {
+  font-family: var(--font-press-start);
+  font-size: 12px;
+  color: var(--color-amber-dim);
+  margin: 0;
+}
+
+.startButton {
+  font-family: var(--font-press-start);
+  font-size: 14px;
+  border: 1px solid;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  background: transparent;
+  transition: border-color 150ms, color 150ms, background 150ms;
+}
+
+.startButton:not(:disabled) {
+  border-color: var(--color-amber);
+  color: var(--color-amber);
+}
+
+.startButton:not(:disabled):hover {
+  border-color: var(--color-amber);
+  color: var(--color-amber);
+  background: rgba(255, 176, 0, 0.1);
+}
+
+.startButton:not(:disabled):focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 2px;
+}
+
+.startButton:disabled {
+  border-color: var(--color-amber-dim);
+  color: var(--color-amber-dim);
+  cursor: not-allowed;
+}
