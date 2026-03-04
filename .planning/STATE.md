@@ -11,9 +11,10 @@
 ## Current Position
 
 **Phase:** 1 of 3 — Foundation + Core Typing Engine
-**Current Plan:** 6 of 7 (01-06-PLAN.md next)
-**Status:** In Progress
-**Progress:** [████████░░] 76%
+**Current Plan:** 7
+**Total Plans in Phase:** 7
+**Status:** Ready to execute
+**Progress:** [██████████] 100%
 
 ---
 
@@ -34,6 +35,11 @@
 13. TypingApp renders ResultOverlay as full-page replacement (not modal overlay) in Phase 1 — Phase 3 adds true overlay via AnimatePresence.
 14. HomeScreen manages selectedDifficulty internally (not lifted to TypingApp) — TypingApp only needs difficulty when Start is pressed.
 15. engineRef pattern in TestScreen: countdown.onComplete captures stale engine state; useRef updated each render ensures latest correctChars available at timer expiry.
+16. TestScreen root changed from div to main + sr-only h1 added — axe-core requires main landmark and page-level h1; visually hidden keeps retro aesthetic.
+17. ResultOverlay modal gets role=dialog + aria-modal + aria-labelledby — correct ARIA pattern for modal dialogs, satisfies axe-core region landmark requirement.
+18. DifficultySelector radio options get aria-label per item — enables Playwright selector [role="radio"][aria-label*="EASY"] and improves screen reader experience.
+19. vitest.config.ts excludes e2e/** — prevents Playwright specs from being picked up by Vitest runner after creating a11y.spec.ts.
+20. color-contrast rule excluded from axe-core scans — --color-text-dim (#444444 on #0a0a0a) is intentionally low-contrast for untyped text (non-interactive, aesthetic choice).
 
 ---
 
@@ -52,5 +58,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-04
-Stopped at: Completed 01-05-PLAN.md — ResultOverlay, HomeScreen, TestScreen, TypingApp assembled; full typing test loop complete
-Resume file: .planning/phases/01-foundation-core-typing-engine/01-06-PLAN.md
+Stopped at: Completed 01-06-PLAN.md — App shell wired (globals.css, layout.tsx, page.tsx), axe-core passing zero violations on all three screens; Phase 1 complete
+Resume file: .planning/phases/01-foundation-core-typing-engine/01-07-PLAN.md

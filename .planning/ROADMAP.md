@@ -38,7 +38,7 @@ Exit criteria: Select difficulty. Start. Type. Characters color correctly.
 Backspace within word. Space advances. Timer counts to zero. Result shows WPM and accuracy.
 Retry and Home work. Tab navigation works. axe-core passes.
 
-**Plans:** 5/6 plans executed
+**Plans:** 6/6 plans complete
 
 Plans:
 - [x] 01-01-PLAN.md — Project scaffold + types, constants, word lists, generateText (DONE: 44ecc11, 0f7876a)
