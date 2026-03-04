@@ -103,7 +103,10 @@ export function TestScreen({ difficulty, onFinish }: TestScreenProps) {
       : null
 
   return (
-    <div className={styles.screen} onClick={handleContainerClick}>
+    <main className={styles.screen} onClick={handleContainerClick}>
+      {/* Visually-hidden heading for screen readers — landmark + page-has-heading-one requirement */}
+      <h1 className={styles.srOnly}>Typing Test — Active</h1>
+
       {/* Hidden input captures all keystrokes — position absolute, not display:none (must be in tab order) */}
       <input
         ref={inputRef}
@@ -132,6 +135,6 @@ export function TestScreen({ difficulty, onFinish }: TestScreenProps) {
       </div>
 
       <p className={styles.escapeHint}>{'[ ESC ] QUIT'}</p>
-    </div>
+    </main>
   )
 }

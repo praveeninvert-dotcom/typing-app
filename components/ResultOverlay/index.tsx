@@ -23,8 +23,13 @@ export function ResultOverlay({ result, onRetry, onHome }: ResultOverlayProps) {
 
   return (
     <div className={styles.backdrop}>
-      <div className={styles.modal}>
-        <h1 className={styles.header}>TEST COMPLETE</h1>
+      <div
+        className={styles.modal}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="result-header"
+      >
+        <h1 id="result-header" className={styles.header}>TEST COMPLETE</h1>
 
         <div className={styles.statGroup}>
           <span className={styles.wpmValue}>{result.wpm}</span>

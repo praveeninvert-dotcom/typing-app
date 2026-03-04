@@ -41,6 +41,7 @@ export function DifficultySelector({ selected, onChange, disabled }: DifficultyS
           key={diff.value}
           role="radio"
           aria-checked={selected === diff.value}
+          aria-label={diff.label}
           tabIndex={selected === diff.value || (selected === null && index === 0) ? 0 : -1}
           className={`${styles.option} ${selected === diff.value ? styles.selected : ''} ${disabled ? styles.disabled : ''}`}
           onClick={() => !disabled && onChange(diff.value)}
