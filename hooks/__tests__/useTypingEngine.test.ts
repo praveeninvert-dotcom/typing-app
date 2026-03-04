@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import { useTypingEngine } from '../useTypingEngine'
+import { useTypingEngine, calculateWPM, calculateAccuracy } from '../useTypingEngine'
 import type { Word } from '@/types'
 
 // Build a minimal fixture so tests don't depend on random word lists
@@ -253,25 +253,21 @@ describe('useTypingEngine', () => {
   describe('calculateWPM', () => {
     it('returns correct WPM using the formula (correctChars/5)/(elapsedSeconds/60)', () => {
       // 300 correct chars in 60 seconds = (300/5)/(60/60) = 60 WPM
-      const { calculateWPM } = require('../useTypingEngine')
       expect(calculateWPM(300, 60)).toBe(60)
     })
 
     it('returns 0 when elapsedSeconds is 0', () => {
-      const { calculateWPM } = require('../useTypingEngine')
       expect(calculateWPM(100, 0)).toBe(0)
     })
   })
 
   describe('calculateAccuracy', () => {
     it('returns correct accuracy percentage', () => {
-      const { calculateAccuracy } = require('../useTypingEngine')
       // 90 correct out of 100 total = 90%
       expect(calculateAccuracy(90, 100)).toBe(90)
     })
 
     it('returns 0 when totalTypedChars is 0', () => {
-      const { calculateAccuracy } = require('../useTypingEngine')
       expect(calculateAccuracy(0, 0)).toBe(0)
     })
   })
