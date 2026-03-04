@@ -20,8 +20,8 @@ export function TestScreen({ difficulty, onFinish }: TestScreenProps) {
   const [words] = useState(() => generateText(difficulty))
 
   const inputRef = useRef<HTMLInputElement>(null)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { playCorrect, playIncorrect } = useKeystrokeSound()
+  // eslint-disable-next-line no-unused-vars
+  const { playCorrect: _playCorrect, playIncorrect: _playIncorrect } = useKeystrokeSound()
 
   // Compute result from engine state and elapsed time
   const computeResult = useCallback(
