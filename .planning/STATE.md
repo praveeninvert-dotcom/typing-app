@@ -13,7 +13,7 @@
 **Phase:** 1 of 3 — Foundation + Core Typing Engine
 **Current Plan:** 7
 **Total Plans in Phase:** 7
-**Status:** Ready to execute
+**Status:** Phase complete — ready for verification
 **Progress:** [██████████] 100%
 
 ---
@@ -40,6 +40,7 @@
 18. DifficultySelector radio options get aria-label per item — enables Playwright selector [role="radio"][aria-label*="EASY"] and improves screen reader experience.
 19. vitest.config.ts excludes e2e/** — prevents Playwright specs from being picked up by Vitest runner after creating a11y.spec.ts.
 20. color-contrast rule excluded from axe-core scans — --color-text-dim (#444444 on #0a0a0a) is intentionally low-contrast for untyped text (non-interactive, aesthetic choice).
+21. useTypingEngine PRINTABLE_KEY guard: `if (currentCharIndex >= word.chars.length) return state` — prevents out-of-bounds char access when user types past end of word without pressing Space. Found during Phase 1 human verification.
 
 ---
 
@@ -58,5 +59,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-04
-Stopped at: Completed 01-06-PLAN.md — App shell wired (globals.css, layout.tsx, page.tsx), axe-core passing zero violations on all three screens; Phase 1 complete
-Resume file: .planning/phases/01-foundation-core-typing-engine/01-07-PLAN.md
+Stopped at: Phase 1 complete — 01-06-PLAN.md approved at human-verify checkpoint; useTypingEngine end-of-word guard committed; all 21 decisions recorded
+Resume file: .planning/phases/02-animations/02-01-PLAN.md

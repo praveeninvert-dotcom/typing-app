@@ -81,6 +81,7 @@ completed: 2026-03-04
 - axe-core passes zero violations on HomeScreen, TestScreen, and ResultScreen (color-contrast excluded intentionally)
 - ResultScreen test reaches result by typing one character then waiting 4s (3s timer + 1s buffer via NEXT_PUBLIC_TEST_TIMER_DURATION=3)
 - All 14 Vitest unit tests still pass after changes
+- Phase 1 human-verified and approved: full typing test loop works end-to-end in browser
 
 ## Task Commits
 
@@ -88,8 +89,10 @@ Each task was committed atomically:
 
 1. **Task 1: App shell — globals.css, layout.tsx, page.tsx** - `ca1b2b7` (feat)
 2. **Task 2: axe-core Playwright accessibility tests** - `16c1b6e` (feat)
+3. **Task 3: useTypingEngine end-of-word guard (found during checkpoint verification)** - `f5a95bd` (fix)
 
-**Plan metadata:** (docs commit follows)
+**Plan metadata:** `04e3421` (docs: complete app shell and axe-core accessibility plan — prior to checkpoint)
+**Post-checkpoint metadata:** (docs commit to follow)
 
 ## Files Created/Modified
 - `app/globals.css` - Tailwind directives, 9 CSS custom properties, CRT scanlines + vignette, retro focus/button reset
@@ -101,6 +104,7 @@ Each task was committed atomically:
 - `components/TestScreen/index.tsx` - Changed root div to main; added sr-only h1; fixed eslint-disable comment
 - `components/TestScreen/TestScreen.module.css` - Added .srOnly class (visually-hidden pattern)
 - `vitest.config.ts` - Added exclude: ['**/e2e/**'] to prevent Playwright specs from running in Vitest
+- `hooks/useTypingEngine.ts` - Added guard `if (currentCharIndex >= word.chars.length) return state` in PRINTABLE_KEY case
 
 ## Decisions Made
 - TestScreen changed from div to main landmark — axe-core requires a main landmark; matches semantic intent (it IS the main content)
@@ -155,8 +159,18 @@ Each task was committed atomically:
 
 ---
 
-**Total deviations:** 5 auto-fixed (3 Rule 1 - Bug, 2 Rule 3 - Blocking)
-**Impact on plan:** All auto-fixes required for build success and axe-core compliance. Accessibility fixes improve real screen reader experience. No scope creep.
+**6. [Rule 1 - Bug] useTypingEngine: typing past end of word accesses out-of-bounds char**
+- **Found during:** Task 3 / checkpoint human verification
+- **Issue:** User could type additional characters after reaching the last char of a word (before pressing Space), causing `word.chars[currentCharIndex]` to be undefined and producing runtime errors
+- **Fix:** Added `if (currentCharIndex >= word.chars.length) return state` guard at the start of the PRINTABLE_KEY case, before the char access
+- **Files modified:** `hooks/useTypingEngine.ts`
+- **Verification:** All 14 unit tests pass; build exits 0
+- **Committed in:** `f5a95bd` (post-checkpoint fix commit)
+
+---
+
+**Total deviations:** 6 auto-fixed (4 Rule 1 - Bug, 2 Rule 3 - Blocking)
+**Impact on plan:** All auto-fixes required for correctness, build success, and axe-core compliance. No scope creep.
 
 ## Issues Encountered
 None beyond deviations documented above.
@@ -169,6 +183,21 @@ None — no external service configuration required.
 - All Phase 1 requirements satisfied: R-001 through R-011, R-070, R-071, R-075, R-076
 - App is ready for Phase 2 (animations via Framer Motion) and Phase 3 (Web Audio API sounds)
 - axe-core baseline established — future phases must maintain zero violations on all three screens
+
+## Self-Check: PASSED
+
+| Item | Status |
+|------|--------|
+| `app/globals.css` | FOUND |
+| `app/layout.tsx` | FOUND |
+| `app/page.tsx` | FOUND |
+| `e2e/a11y.spec.ts` | FOUND |
+| `hooks/useTypingEngine.ts` | FOUND |
+| `01-06-SUMMARY.md` | FOUND |
+| Commit `ca1b2b7` (Task 1) | FOUND |
+| Commit `16c1b6e` (Task 2) | FOUND |
+| Commit `04e3421` (metadata pre-checkpoint) | FOUND |
+| Commit `f5a95bd` (bug fix post-checkpoint) | FOUND |
 
 ---
 *Phase: 01-foundation-core-typing-engine*
