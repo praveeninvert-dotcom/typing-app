@@ -41,7 +41,7 @@ Retry and Home work. Tab navigation works. axe-core passes.
 **Plans:** 6 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Project scaffold + types, constants, word lists, generateText
+- [x] 01-01-PLAN.md — Project scaffold + types, constants, word lists, generateText (DONE: 44ecc11, 0f7876a)
 - [ ] 01-02-PLAN.md — useCountdown hook + useKeystrokeSound stub
 - [ ] 01-03-PLAN.md — useTypingEngine TDD (typing state machine)
 - [ ] 01-04-PLAN.md — DifficultySelector, StatsBar, TextDisplay components
@@ -104,6 +104,6 @@ Focus trapped in both overlays. Enter on result triggers Retry.
 
 ## Phase Status
 
-Phase 1: Planned
+Phase 1: In Progress (1 of 6 plans complete)
 Phase 2: Planned
 Phase 3: Planned
