@@ -64,6 +64,10 @@ function engineReducer(state: EngineState, action: EngineAction): EngineState {
 
       const { words, currentWordIndex, currentCharIndex } = state
       const word = words[currentWordIndex]
+
+      // Don't allow typing past the end of a word — user must press Space first
+      if (currentCharIndex >= word.chars.length) return state
+
       const char = word.chars[currentCharIndex]
 
       const isCorrect = action.key === char.expected
