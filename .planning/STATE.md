@@ -11,9 +11,9 @@
 ## Current Position
 
 **Phase:** 1 of 3 — Foundation + Core Typing Engine
-**Current Plan:** 4 of 7 (01-04-PLAN.md next)
+**Current Plan:** 5 of 7 (01-05-PLAN.md next)
 **Status:** In Progress
-**Progress:** [████░░░░░░] 43%
+**Progress:** [███████░░░] 67%
 
 ---
 
@@ -28,6 +28,9 @@
 7. Added vitest/globals to tsconfig.json types — required for vi/describe/it/expect to resolve in test files under tsc.
 8. useTypingEngine uses useReducer (not multiple useState) — atomic state updates in handleKey avoid stale closure bugs.
 9. onStart/onFinish side effects called from handleKey using pre-dispatch state values, keeping the reducer pure.
+10. React.memo on CharSpan and WordSpan prevents re-rendering entire word list on every keypress — only active/changed word re-renders.
+11. opacity:0/opacity:1 toggle for StatsBar (not display:none) — CLAUDE.md requires height always reserved so no layout shift on first keypress.
+12. CSS cursor blink uses step-end timing function — produces crisp on/off blink matching terminal aesthetic, no easing needed.
 
 ---
 
@@ -46,5 +49,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-04
-Stopped at: Completed 01-03-PLAN.md — useTypingEngine TDD implementation done
-Resume file: .planning/phases/01-foundation-core-typing-engine/01-04-PLAN.md
+Stopped at: Completed 01-04-PLAN.md — DifficultySelector, StatsBar, TextDisplay display components done
+Resume file: .planning/phases/01-foundation-core-typing-engine/01-05-PLAN.md
