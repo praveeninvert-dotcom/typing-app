@@ -64,6 +64,9 @@
 .breakdown {
   font-family: var(--font-vt323);
   font-size: 24px;
+  /* Override: start invisible, JS adds .breakdownVisible at ~900ms */
+  opacity: 0;
+  transition: opacity 200ms ease-in;
 }
 
 .correct {
@@ -76,6 +79,11 @@
 
 .incorrect {
   color: var(--color-red-wrong);
+}
+
+/* Character breakdown fade-in — appears after accuracy count-up ends */
+.breakdownVisible {
+  opacity: 1;
 }
 
 .buttons {
