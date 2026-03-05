@@ -2,19 +2,19 @@
 
 ## Project Reference
 
+See: .planning/PROJECT.md (updated 2026-03-05)
+
 **What:** Retro terminal-style typing speed test. 60s, 3 difficulty levels, Web Audio API sounds.
 **Core value:** Zero friction. Load, pick difficulty, type. No accounts, no storage.
-**Milestone:** v1.0 — Functional Retro Typing Test (Phases 1–3)
+**Current focus:** Planning next milestone (v1.1 — Phase 3: Sounds + Edge Cases + A11y)
 
 ---
 
 ## Current Position
 
-**Phase:** 2 of 3 — Live Stats, Result Polish (COMPLETE)
-**Current Plan:** Not started
-**Total Plans in Phase:** 3
-**Status:** Milestone complete
-**Progress:** [██████████] 100%
+**Status:** v1.0 shipped — planning v1.1
+**Phases archived:** Phases 1–2 in `.planning/milestones/v1.0-phases/`
+**Next:** Phase 3 — Sounds + Edge Cases + Animations + A11y (`/gsd:new-milestone` to start)
 
 ---
 
@@ -67,5 +67,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-05
-Stopped at: Completed 02-03-PLAN.md — Phase 2 fully complete, human verification approved
-Resume file: None — ready for Phase 3
+Stopped at: v1.0 milestone archived — ready for Phase 3 planning
+Resume file: None — use `/gsd:new-milestone` to define v1.1 requirements and Phase 3 plan
