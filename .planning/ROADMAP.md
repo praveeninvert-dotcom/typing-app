@@ -71,7 +71,7 @@ Includes:
 Exit criteria: Stats accurate during test. StatsBar no layout shift.
 TIME pulses at 10s. Result shows all data with count-up. Retry and Home fully work.
 
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 02-01-PLAN.md — Live WPM (5-second guard), StatsBar Framer Motion fade-in, TIME red pulse at 10s (DONE: fd93214)
