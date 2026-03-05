@@ -94,13 +94,14 @@ export function TestScreen({ difficulty, onFinish }: TestScreenProps) {
   // Live stats for StatsBar
   const elapsedSeconds = TIMER_DURATION - countdown.timeLeft
   const wpm =
-    elapsedSeconds > 0
+    elapsedSeconds >= 5
       ? Math.round((engine.correctChars / 5) / (elapsedSeconds / 60))
       : 0
   const accuracy =
     engine.totalTypedChars > 0
       ? Math.round((engine.correctChars / engine.totalTypedChars) * 100)
       : null
+  const timeWarning = engine.started && countdown.timeLeft <= 10 && countdown.timeLeft > 0
 
   return (
     <main className={styles.screen} onClick={handleContainerClick}>
@@ -124,6 +125,7 @@ export function TestScreen({ difficulty, onFinish }: TestScreenProps) {
         timeLeft={countdown.timeLeft}
         accuracy={accuracy}
         started={engine.started}
+        timeWarning={timeWarning}
       />
 
       <div className={styles.textDisplayContainer}>
