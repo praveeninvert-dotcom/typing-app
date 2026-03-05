@@ -71,6 +71,13 @@ Includes:
 Exit criteria: Stats accurate during test. StatsBar no layout shift.
 TIME pulses at 10s. Result shows all data with count-up. Retry and Home fully work.
 
+**Plans:** 3 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Live WPM (5-second guard), StatsBar Framer Motion fade-in, TIME red pulse at 10s
+- [ ] 02-02-PLAN.md — ResultOverlay count-up animations (WPM 800ms, accuracy 600ms) + character breakdown fade-in
+- [ ] 02-03-PLAN.md — AnimatePresence screen transitions (200ms fade) + Retry/Home wiring + human verify
+
 ---
 
 ## Phase 3: Sounds + Edge Cases + Animations + A11y
