@@ -47,6 +47,8 @@
 25. useCountUp uses setTimeout chains (not requestAnimationFrame) — predictable step count matches retro odometer aesthetic, simpler stepped animation than rAF loop.
 26. CSS transition on opacity (not @keyframes) for breakdownVisible class toggle — cleaner response to class addition without animation fill-mode concerns.
 27. framer-motion installed to resolve missing dependency — StatsBar already imported it from Phase 1 but package was absent from package.json.
+28. AnimatePresence mode="wait" on TypingApp: exit animation (200ms) completes before entry animation starts — both RETRY and HOME use identical sequential fade treatment.
+29. testKey counter on inner TestScreen (not outer motion.div): forces TestScreen remount for new word list on Retry without triggering outer motion.div exit/enter animation cycle.
 
 ---
 
@@ -65,5 +67,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-05
-Stopped at: Completed 02-02-PLAN.md — ResultOverlay count-up animations (useCountUp hook), character breakdown CSS fade-in; Phase 2 complete
-Resume file: .planning/phases/03-sound-framer-motion-final/03-01-PLAN.md
+Stopped at: Task 2 checkpoint in 02-03-PLAN.md — awaiting human verification of full Phase 2 feature set in browser
+Resume file: .planning/phases/02-live-stats-result-polish/02-03-PLAN.md (Task 2 verification)
