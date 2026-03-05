@@ -10,11 +10,11 @@
 
 ## Current Position
 
-**Phase:** 1 of 3 — Foundation + Core Typing Engine
-**Current Plan:** 7
-**Total Plans in Phase:** 7
+**Phase:** 2 of 3 — Live Stats, Result Polish
+**Current Plan:** 2
+**Total Plans in Phase:** 2
 **Status:** Phase complete — ready for verification
-**Progress:** [██████████] 100%
+**Progress:** [█████████░] 89%
 
 ---
 
@@ -41,6 +41,12 @@
 19. vitest.config.ts excludes e2e/** — prevents Playwright specs from being picked up by Vitest runner after creating a11y.spec.ts.
 20. color-contrast rule excluded from axe-core scans — --color-text-dim (#444444 on #0a0a0a) is intentionally low-contrast for untyped text (non-interactive, aesthetic choice).
 21. useTypingEngine PRINTABLE_KEY guard: `if (currentCharIndex >= word.chars.length) return state` — prevents out-of-bounds char access when user types past end of word without pressing Space. Found during Phase 1 human verification.
+22. 5-second WPM guard uses `>= 5` (not `> 0`) — suppresses early WPM spikes in first 5 seconds per 02-CONTEXT.md user decision.
+23. timeWarning condition includes `> 0` — stops TIME pulse when test ends at exactly 0 (not just <= 10).
+24. StatsBar uses Framer Motion motion.div with initial={{ opacity: 0, y: -8 }} — height always reserved (no layout shift), animate drives visibility on started prop.
+25. useCountUp uses setTimeout chains (not requestAnimationFrame) — predictable step count matches retro odometer aesthetic, simpler stepped animation than rAF loop.
+26. CSS transition on opacity (not @keyframes) for breakdownVisible class toggle — cleaner response to class addition without animation fill-mode concerns.
+27. framer-motion installed to resolve missing dependency — StatsBar already imported it from Phase 1 but package was absent from package.json.
 
 ---
 
@@ -58,6 +64,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-04
-Stopped at: Phase 1 complete — 01-06-PLAN.md approved at human-verify checkpoint; useTypingEngine end-of-word guard committed; all 21 decisions recorded
-Resume file: .planning/phases/02-animations/02-01-PLAN.md
+Last session: 2026-03-05
+Stopped at: Completed 02-02-PLAN.md — ResultOverlay count-up animations (useCountUp hook), character breakdown CSS fade-in; Phase 2 complete
+Resume file: .planning/phases/03-sound-framer-motion-final/03-01-PLAN.md

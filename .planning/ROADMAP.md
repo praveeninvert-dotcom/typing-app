@@ -52,7 +52,7 @@ Plans:
 
 ## Phase 2: Live Stats + Result Polish
 
-Status: Planned
+Status: In Progress
 Requirements: R-020 to R-034
 
 Goal: Stats fully live. Result overlay has count-up animations and complete data.
@@ -71,10 +71,10 @@ Includes:
 Exit criteria: Stats accurate during test. StatsBar no layout shift.
 TIME pulses at 10s. Result shows all data with count-up. Retry and Home fully work.
 
-**Plans:** 3 plans
+**Plans:** 2/3 plans executed
 
 Plans:
-- [ ] 02-01-PLAN.md — Live WPM (5-second guard), StatsBar Framer Motion fade-in, TIME red pulse at 10s
+- [x] 02-01-PLAN.md — Live WPM (5-second guard), StatsBar Framer Motion fade-in, TIME red pulse at 10s (DONE: fd93214)
 - [ ] 02-02-PLAN.md — ResultOverlay count-up animations (WPM 800ms, accuracy 600ms) + character breakdown fade-in
 - [ ] 02-03-PLAN.md — AnimatePresence screen transitions (200ms fade) + Retry/Home wiring + human verify
 
@@ -111,6 +111,6 @@ Focus trapped in both overlays. Enter on result triggers Retry.
 
 ## Phase Status
 
-Phase 1: In Progress (5 of 6 plans complete)
-Phase 2: Planned
+Phase 1: Complete (6 of 6 plans complete)
+Phase 2: In Progress (1 of 3 plans complete)
 Phase 3: Planned
