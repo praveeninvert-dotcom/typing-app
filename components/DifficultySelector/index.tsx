@@ -1,7 +1,14 @@
 'use client'
 import { useCallback } from 'react'
+import { motion } from 'framer-motion'
 import type { Difficulty } from '@/types'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 import styles from './DifficultySelector.module.css'
+
+const optionVariants = {
+  unselected: { scale: 1 },
+  selected: { scale: [1, 1.04, 1], transition: { duration: 0.2, times: [0, 0.5, 1] } },
+}
 
 interface DifficultySelectorProps {
   selected: Difficulty | null
@@ -16,6 +23,7 @@ const DIFFICULTY_OPTIONS = [
 ]
 
 export function DifficultySelector({ selected, onChange, disabled }: DifficultySelectorProps) {
+  const reducedMotion = useReducedMotion()
   const handleContainerKeyDown = useCallback((e: React.KeyboardEvent) => {
     const currentIndex = DIFFICULTY_OPTIONS.findIndex(d => d.value === selected)
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
@@ -37,7 +45,7 @@ export function DifficultySelector({ selected, onChange, disabled }: DifficultyS
       onKeyDown={handleContainerKeyDown}
     >
       {DIFFICULTY_OPTIONS.map((diff, index) => (
-        <div
+        <motion.div
           key={diff.value}
           role="radio"
           aria-checked={selected === diff.value}
@@ -51,10 +59,12 @@ export function DifficultySelector({ selected, onChange, disabled }: DifficultyS
               if (!disabled) onChange(diff.value)
             }
           }}
+          variants={optionVariants}
+          animate={reducedMotion ? 'unselected' : (selected === diff.value ? 'selected' : 'unselected')}
         >
           <span className={styles.label}>{diff.label}</span>
           <span className={styles.descriptor}>{diff.descriptor}</span>
-        </div>
+        </motion.div>
       ))}
     </div>
   )

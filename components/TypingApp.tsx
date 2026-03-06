@@ -5,20 +5,22 @@ import type { Screen, Difficulty, ResultState } from '@/types'
 import { HomeScreen } from '@/components/HomeScreen'
 import { TestScreen } from '@/components/TestScreen'
 import { ResultOverlay } from '@/components/ResultOverlay'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 
 const screenVariants = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
+  initial: (reduced: boolean) => ({ opacity: 0, x: reduced ? 0 : 40 }),
+  animate: { opacity: 1, x: 0 },
+  exit: (reduced: boolean) => ({ opacity: 0, x: reduced ? 0 : -40 }),
 }
 
-const screenTransition = { duration: 0.2 }
+const screenTransition = { duration: 0.2, ease: 'easeInOut' as const }
 
 export function TypingApp() {
   const [screen, setScreen] = useState<Screen>('home')
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null)
   const [result, setResult] = useState<ResultState | null>(null)
   const [testKey, setTestKey] = useState(0)
+  const reducedMotion = useReducedMotion()
 
   const handleStart = (d: Difficulty) => {
     setDifficulty(d)
@@ -46,6 +48,7 @@ export function TypingApp() {
       {screen === 'home' && (
         <motion.div
           key="home"
+          custom={reducedMotion}
           variants={screenVariants}
           initial="initial"
           animate="animate"
@@ -60,6 +63,7 @@ export function TypingApp() {
       {screen === 'test' && difficulty !== null && (
         <motion.div
           key="test"
+          custom={reducedMotion}
           variants={screenVariants}
           initial="initial"
           animate="animate"
@@ -74,6 +78,7 @@ export function TypingApp() {
       {screen === 'result' && result !== null && (
         <motion.div
           key="result"
+          custom={reducedMotion}
           variants={screenVariants}
           initial="initial"
           animate="animate"
@@ -89,6 +94,7 @@ export function TypingApp() {
       {screen !== 'home' && screen !== 'test' && screen !== 'result' && (
         <motion.div
           key="fallback"
+          custom={reducedMotion}
           variants={screenVariants}
           initial="initial"
           animate="animate"
