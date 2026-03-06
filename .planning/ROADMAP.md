@@ -42,10 +42,20 @@ Includes:
 
 Exit criteria: Sounds play. Caps Lock warning works. Escape quit flow complete. All animations play. axe-core passes. Focus trapped in both overlays.
 
+### Phase 4: Fix TextDisplay Auto-Scroll CSS (Gap Closure)
+
+**Goal:** Make TextDisplay a proper scroll container so the JS scrollTo() call has visual effect.
+**Requirements:** R-067
+**Gap Closure:** Closes gap identified in v1.1 audit — CSS prerequisites missing for auto-scroll
+
+Plans:
+- [ ] 04-01-PLAN.md — Add overflow-y: auto and max-height to TextDisplay .container
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status   | Completed  |
 |-------|-----------|----------------|----------|------------|
 | 1. Foundation + Core Typing Engine | v1.0 | 6/6 | Complete | 2026-03-05 |
 | 2. Live Stats + Result Polish | v1.0 | 3/3 | Complete | 2026-03-05 |
-| 3. Sounds + Edge Cases + Animations + A11y | 2/4 | In Progress|  | — |
+| 3. Sounds + Edge Cases + Animations + A11y | v1.1 | 4/4 | Complete | 2026-03-06 |
+| 4. Fix TextDisplay Auto-Scroll CSS | v1.1 | 0/1 | Pending | — |
