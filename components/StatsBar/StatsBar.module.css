@@ -60,3 +60,10 @@
   50%  { transform: scale(1.08); }
   100% { transform: scale(1.0); }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .timePulse {
+    animation: none;
+    /* Color warning still applies via .valueRed — no animation needed */
+  }
+}

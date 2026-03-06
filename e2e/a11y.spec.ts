@@ -38,6 +38,34 @@ test.describe('Accessibility — TestScreen', () => {
   })
 })
 
+test.describe('Accessibility — Quit Confirmation', () => {
+  test('quit confirmation dialog passes axe-core', async ({ page }) => {
+    await page.goto('/')
+
+    // Select difficulty and start
+    await page.locator('[role="radio"][aria-label*="EASY"]').click()
+    await page.locator('button:has-text("START")').click()
+
+    // Type one char to start the timer
+    const input = page.locator('[aria-label="Type the displayed text"]')
+    await input.waitFor({ state: 'attached' })
+    await input.focus()
+    await page.keyboard.press('a')
+
+    // Press Escape to open quit confirmation
+    await page.keyboard.press('Escape')
+
+    // Confirm quit dialog is visible
+    await expect(page.locator('[role="dialog"][aria-labelledby="quit-title"]')).toBeVisible()
+
+    const results = await new AxeBuilder({ page })
+      .disableRules(['color-contrast'])
+      .analyze()
+
+    expect(results.violations).toEqual([])
+  })
+})
+
 test.describe('Accessibility — ResultScreen', () => {
   test('axe-core passes on ResultScreen', async ({ page }) => {
     await page.goto('/')
