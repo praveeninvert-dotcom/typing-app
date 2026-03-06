@@ -1,7 +1,28 @@
 'use client'
 import { useEffect, useState, useRef } from 'react'
+import { motion } from 'framer-motion'
 import type { ResultState } from '@/types'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 import styles from './ResultOverlay.module.css'
+
+const backdropVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+}
+
+const modalVariants = {
+  hidden: { opacity: 0, scale: 0.92 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { type: 'spring' as const, stiffness: 280, damping: 22 },
+  },
+}
+
+const modalReducedVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.2 } },
+}
 
 /**
  * Stepped count-up from 0 to `target` over `duration` ms.
@@ -47,6 +68,11 @@ interface ResultOverlayProps {
 }
 
 export function ResultOverlay({ result, onRetry, onHome }: ResultOverlayProps) {
+  const reducedMotion = useReducedMotion()
+  const retryButtonRef = useRef<HTMLButtonElement>(null)
+  const homeButtonRef = useRef<HTMLButtonElement>(null)
+  const [announced, setAnnounced] = useState(false)
+
   const displayWpm = useCountUp(result.wpm, 800, 0)
   const displayAccuracy = useCountUp(result.accuracy, 600, 100)
 
@@ -54,6 +80,17 @@ export function ResultOverlay({ result, onRetry, onHome }: ResultOverlayProps) {
   const [breakdownVisible, setBreakdownVisible] = useState(false)
   useEffect(() => {
     const t = setTimeout(() => setBreakdownVisible(true), 900)
+    return () => clearTimeout(t)
+  }, [])
+
+  // R-074: Auto-focus RETRY button on mount
+  useEffect(() => {
+    retryButtonRef.current?.focus()
+  }, [])
+
+  // R-077: Announce "Test complete" to screen readers on mount
+  useEffect(() => {
+    const t = setTimeout(() => setAnnounced(true), 100)
     return () => clearTimeout(t)
   }, [])
 
@@ -68,13 +105,45 @@ export function ResultOverlay({ result, onRetry, onHome }: ResultOverlayProps) {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [onRetry])
 
+  // R-074: Focus trap — Tab cycles only between RETRY and HOME
+  const handleModalKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      if (document.activeElement === retryButtonRef.current) {
+        homeButtonRef.current?.focus()
+      } else {
+        retryButtonRef.current?.focus()
+      }
+    }
+  }
+
   return (
-    <div className={styles.backdrop}>
+    <motion.div
+      className={styles.backdrop}
+      variants={backdropVariants}
+      initial="hidden"
+      animate="visible"
+      transition={{ duration: 0.15 }}
+    >
+      {/* R-077: Visually-hidden live region announces "Test complete" on mount */}
       <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className={styles.srOnly}
+      >
+        {announced ? 'Test complete' : ''}
+      </div>
+
+      <motion.div
         className={styles.modal}
         role="dialog"
         aria-modal="true"
         aria-labelledby="result-header"
+        variants={reducedMotion ? modalReducedVariants : modalVariants}
+        initial="hidden"
+        animate="visible"
+        onKeyDown={handleModalKeyDown}
       >
         <h1 id="result-header" className={styles.header}>TEST COMPLETE</h1>
 
@@ -96,6 +165,7 @@ export function ResultOverlay({ result, onRetry, onHome }: ResultOverlayProps) {
 
         <div className={styles.buttons}>
           <button
+            ref={retryButtonRef}
             className={styles.button}
             onClick={onRetry}
             type="button"
@@ -103,6 +173,7 @@ export function ResultOverlay({ result, onRetry, onHome }: ResultOverlayProps) {
             RETRY
           </button>
           <button
+            ref={homeButtonRef}
             className={styles.button}
             onClick={onHome}
             type="button"
@@ -110,7 +181,7 @@ export function ResultOverlay({ result, onRetry, onHome }: ResultOverlayProps) {
             HOME
           </button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }
