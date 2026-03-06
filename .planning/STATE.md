@@ -12,9 +12,10 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 
 ## Current Position
 
-**Status:** v1.0 shipped — planning v1.1
+**Status:** Phase 3 in progress — executing plans
+**Phase:** 03-sounds-edge-cases-animations-a11y
+**Current Plan:** 3 of N (03-01, 03-02 complete)
 **Phases archived:** Phases 1–2 in `.planning/milestones/v1.0-phases/`
-**Next:** Phase 3 — Sounds + Edge Cases + Animations + A11y (`/gsd:new-milestone` to start)
 
 ---
 
@@ -49,6 +50,12 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 27. framer-motion installed to resolve missing dependency — StatsBar already imported it from Phase 1 but package was absent from package.json.
 28. AnimatePresence mode="wait" on TypingApp: exit animation (200ms) completes before entry animation starts — both RETRY and HOME use identical sequential fade treatment.
 29. testKey counter on inner TestScreen (not outer motion.div): forces TestScreen remount for new word list on Retry without triggering outer motion.div exit/enter animation cycle.
+30. soundEnabled defaults to true — sounds are the signature feature; user opts out rather than in (03-01).
+31. Sound determined pre-dispatch: compare key to currentWord.chars[currentCharIndex].expected before engine.handleKey() call — no re-render needed to classify the keypress (03-01).
+32. stopPropagation on SND toggle click button — prevents click from bubbling to main container and re-focusing the hidden input (03-01).
+33. pausedRef (not state) gates setInterval tick in useCountdown — zero re-render overhead on pause/resume; reset() also clears it to prevent stuck-paused state (03-02).
+34. Caps Lock monitored on both hidden input keydown and window listener — catches OS-level toggle outside the focused input (03-02).
+35. Focus trap for quit modal implemented on quitOverlay onKeyDown (not document) — simpler lifecycle, Tab cycles between YES/NO refs only (03-02).
 
 ---
 
@@ -66,6 +73,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-05
-Stopped at: v1.0 milestone archived — ready for Phase 3 planning
-Resume file: None — use `/gsd:new-milestone` to define v1.1 requirements and Phase 3 plan
+Last session: 2026-03-06
+Stopped at: Completed 03-01-PLAN.md (Web Audio sounds + SND toggle)
+Resume file: None

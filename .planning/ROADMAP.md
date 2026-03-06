@@ -48,4 +48,4 @@ Exit criteria: Sounds play. Caps Lock warning works. Escape quit flow complete. 
 |-------|-----------|----------------|----------|------------|
 | 1. Foundation + Core Typing Engine | v1.0 | 6/6 | Complete | 2026-03-05 |
 | 2. Live Stats + Result Polish | v1.0 | 3/3 | Complete | 2026-03-05 |
-| 3. Sounds + Edge Cases + Animations + A11y | v1.1 | 0/4 | Not started | — |
+| 3. Sounds + Edge Cases + Animations + A11y | 2/4 | In Progress|  | — |
