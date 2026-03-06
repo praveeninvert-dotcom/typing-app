@@ -19,11 +19,17 @@ Full details: `.planning/milestones/v1.0-ROADMAP.md`
 
 ### 📋 v1.1 Sounds + Edge Cases + A11y (Planned)
 
-- [ ] Phase 3: Sounds + Edge Cases + Animations + A11y (0 plans)
+- [ ] Phase 3: Sounds + Edge Cases + Animations + A11y (4 plans)
 
 **Phase 3 Goal:** Full production quality. All animations, all edge cases, full a11y.
 
 Requirements: R-040 to R-042 (sounds), R-050 to R-057 (edge cases), R-060 to R-068 (animations), R-072 to R-074, R-077 (a11y)
+
+Plans:
+- [ ] 03-01-PLAN.md — Web Audio API sounds + SND toggle
+- [ ] 03-02-PLAN.md — Caps Lock warning + Escape quit confirmation + Space/Backspace guard
+- [ ] 03-03-PLAN.md — All Framer Motion animations (home stagger, difficulty pulse, slide transitions, shake, flash, scroll, blink pause)
+- [ ] 03-04-PLAN.md — ResultOverlay spring + focus trap + aria-live + reduced motion + axe-core
 
 Includes:
 - `hooks/useKeystrokeSound.ts` — Web Audio API, correct (square 800Hz 60ms) and wrong (sawtooth 200Hz 100ms)
@@ -42,4 +48,4 @@ Exit criteria: Sounds play. Caps Lock warning works. Escape quit flow complete. 
 |-------|-----------|----------------|----------|------------|
 | 1. Foundation + Core Typing Engine | v1.0 | 6/6 | Complete | 2026-03-05 |
 | 2. Live Stats + Result Polish | v1.0 | 3/3 | Complete | 2026-03-05 |
-| 3. Sounds + Edge Cases + Animations + A11y | v1.1 | 0/? | Not started | — |
+| 3. Sounds + Edge Cases + Animations + A11y | v1.1 | 0/4 | Not started | — |
