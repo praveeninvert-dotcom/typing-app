@@ -67,7 +67,7 @@ export function TypingApp() {
           transition={screenTransition}
           style={{ width: '100%', height: '100%' }}
         >
-          <TestScreen key={testKey} difficulty={difficulty} onFinish={handleTestFinish} />
+          <TestScreen key={testKey} difficulty={difficulty} onFinish={handleTestFinish} onQuit={handleHome} />
         </motion.div>
       )}
 

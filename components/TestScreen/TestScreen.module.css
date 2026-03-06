@@ -67,3 +67,67 @@
   margin-top: 2rem;
   margin-bottom: 0;
 }
+
+/* R-050/R-051: Caps Lock warning banner */
+.capsWarning {
+  font-family: var(--font-press-start);
+  font-size: 0.5rem;
+  color: var(--color-red-wrong);
+  text-align: center;
+  margin-top: 0.75rem;
+  letter-spacing: 0.05em;
+  animation: none; /* Phase 3 plan 04 handles reduced motion */
+}
+
+/* R-052/R-053/R-054/R-055/R-056/R-073: Quit confirmation overlay */
+.quitOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.quitModal {
+  background: var(--color-surface);
+  border: 1px solid var(--color-amber-dim);
+  padding: 2rem 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.quitTitle {
+  font-family: var(--font-press-start);
+  font-size: 0.75rem;
+  color: var(--color-amber);
+  margin: 0;
+  letter-spacing: 0.1em;
+}
+
+.quitButtons {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.quitButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-press-start);
+  font-size: 0.6rem;
+  color: var(--color-amber);
+  letter-spacing: 0.05em;
+  padding: 0.5rem;
+  transition: color 0.1s ease;
+}
+
+.quitButton:hover,
+.quitButton:focus-visible {
+  color: var(--color-blue);
+  outline: none;
+}

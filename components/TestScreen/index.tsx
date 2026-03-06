@@ -13,15 +13,22 @@ import styles from './TestScreen.module.css'
 interface TestScreenProps {
   difficulty: Difficulty
   onFinish: (result: ResultState) => void
+  onQuit: () => void
 }
 
-export function TestScreen({ difficulty, onFinish }: TestScreenProps) {
+export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
   // Words generated once on mount via lazy initializer — stable reference
   const [words] = useState(() => generateText(difficulty))
 
   const [soundEnabled, setSoundEnabled] = useState(true)
+  // R-050/R-051: Caps Lock detection state
+  const [capsLockOn, setCapsLockOn] = useState(false)
+  // R-052/R-053/R-054/R-055/R-056: Quit confirmation state
+  const [quitting, setQuitting] = useState(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
+  const yesButtonRef = useRef<HTMLButtonElement>(null)
+  const noButtonRef = useRef<HTMLButtonElement>(null)
   const { playCorrect, playIncorrect } = useKeystrokeSound({ soundEnabled })
 
   // Compute result from engine state and elapsed time
@@ -80,9 +87,45 @@ export function TestScreen({ difficulty, onFinish }: TestScreenProps) {
     inputRef.current?.focus()
   }, [])
 
+  // R-050/R-051: Detect Caps Lock toggled outside the hidden input (e.g. via OS shortcut)
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      setCapsLockOn(e.getModifierState('CapsLock'))
+    }
+    window.addEventListener('keydown', handler)
+    window.addEventListener('keyup', handler)
+    return () => {
+      window.removeEventListener('keydown', handler)
+      window.removeEventListener('keyup', handler)
+    }
+  }, [])
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       e.preventDefault() // Prevents Space from scrolling page, etc.
+
+      // R-050/R-051: Update Caps Lock state on every keydown inside the input
+      setCapsLockOn(e.getModifierState('CapsLock'))
+
+      // R-052/R-053/R-055/R-056: Escape key — show/dismiss quit confirmation
+      if (e.key === 'Escape') {
+        if (quitting) {
+          // Escape dismisses (same as NO) — R-056
+          setQuitting(false)
+          countdown.resume()
+          inputRef.current?.focus()
+        } else if (engine.started && !engine.finished) {
+          setQuitting(true)
+          countdown.pause()
+          // Focus YES button after state update
+          setTimeout(() => yesButtonRef.current?.focus(), 0)
+        }
+        return
+      }
+
+      // R-057: Space and Backspace before first character do not start the timer
+      if (!engine.started && (e.key === ' ' || e.key === 'Backspace')) return
+
       const key = e.key
       // Determine correct/incorrect BEFORE engine processes key — no sound for Space or Backspace
       if (key.length === 1 && key !== ' ') {
@@ -98,7 +141,7 @@ export function TestScreen({ difficulty, onFinish }: TestScreenProps) {
       }
       engine.handleKey(key)
     },
-    [engine, playCorrect, playIncorrect]
+    [engine, quitting, countdown, playCorrect, playIncorrect]
   )
 
   const handleContainerClick = useCallback(() => {
@@ -164,7 +207,66 @@ export function TestScreen({ difficulty, onFinish }: TestScreenProps) {
         />
       </div>
 
+      {/* R-050/R-051: Caps Lock warning — role="alert" for screen readers */}
+      {capsLockOn && (
+        <div
+          className={styles.capsWarning}
+          role="alert"
+          aria-live="assertive"
+        >
+          {'⚠ CAPS LOCK ON'}
+        </div>
+      )}
+
       <p className={styles.escapeHint}>{'[ ESC ] QUIT'}</p>
+
+      {/* R-052/R-053/R-054/R-055/R-056/R-073: Quit confirmation overlay */}
+      {quitting && (
+        <div
+          className={styles.quitOverlay}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="quit-title"
+          onKeyDown={(e) => {
+            // R-073: Focus trap — Tab cycles between YES and NO only
+            if (e.key === 'Tab') {
+              e.preventDefault()
+              if (document.activeElement === yesButtonRef.current) {
+                noButtonRef.current?.focus()
+              } else {
+                yesButtonRef.current?.focus()
+              }
+            }
+            if (e.key === 'Escape') {
+              setQuitting(false)
+              countdown.resume()
+              inputRef.current?.focus()
+            }
+          }}
+        >
+          <div className={styles.quitModal}>
+            <p id="quit-title" className={styles.quitTitle}>QUIT TEST?</p>
+            <div className={styles.quitButtons}>
+              <button
+                ref={yesButtonRef}
+                className={styles.quitButton}
+                onClick={() => { setQuitting(false); onQuit() }}
+                type="button"
+              >
+                {'[ YES ]'}
+              </button>
+              <button
+                ref={noButtonRef}
+                className={styles.quitButton}
+                onClick={() => { setQuitting(false); countdown.resume(); inputRef.current?.focus() }}
+                type="button"
+              >
+                {'[ NO ]'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
