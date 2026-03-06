@@ -9,6 +9,8 @@ interface UseCountdownReturn {
   timeLeft: number
   start: () => void
   reset: () => void
+  pause: () => void
+  resume: () => void
 }
 
 export function useCountdown({ onComplete }: UseCountdownOptions): UseCountdownReturn {
@@ -17,11 +19,15 @@ export function useCountdown({ onComplete }: UseCountdownOptions): UseCountdownR
   // Store onComplete in a ref to avoid stale closure — critical pitfall documented in RESEARCH.md
   const onCompleteRef = useRef(onComplete)
   onCompleteRef.current = onComplete
+  // Pause gate — when true, interval tick is skipped
+  const pausedRef = useRef(false)
 
   const start = useCallback(() => {
     // Guard: if already running, do not create a second interval
     if (intervalRef.current !== null) return
     intervalRef.current = setInterval(() => {
+      // R-052/R-053: Pause gate — skip tick when paused
+      if (pausedRef.current) return
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(intervalRef.current!)
@@ -40,8 +46,17 @@ export function useCountdown({ onComplete }: UseCountdownOptions): UseCountdownR
       clearInterval(intervalRef.current)
       intervalRef.current = null
     }
+    pausedRef.current = false
     setTimeLeft(TIMER_DURATION)
   }, [])
 
-  return { timeLeft, start, reset }
+  const pause = useCallback(() => {
+    pausedRef.current = true
+  }, [])
+
+  const resume = useCallback(() => {
+    pausedRef.current = false
+  }, [])
+
+  return { timeLeft, start, reset, pause, resume }
 }
