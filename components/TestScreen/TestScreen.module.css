@@ -1,4 +1,5 @@
 .screen {
+  position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -6,6 +7,29 @@
   justify-content: center;
   padding: 2rem;
   gap: 2rem;
+}
+
+.sndToggle {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-press-start);
+  font-size: 0.5rem;
+  color: var(--color-amber);
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0;
+  opacity: 0.8;
+  transition: opacity 0.15s ease;
+}
+.sndToggle:hover {
+  opacity: 1;
+}
+.sndToggle:focus-visible {
+  outline: 1px solid var(--color-amber);
+  outline-offset: 3px;
 }
 
 /* Hidden input: must remain in tab order — use position/opacity/size, NOT display:none */

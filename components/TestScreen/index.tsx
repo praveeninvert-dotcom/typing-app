@@ -19,9 +19,10 @@ export function TestScreen({ difficulty, onFinish }: TestScreenProps) {
   // Words generated once on mount via lazy initializer — stable reference
   const [words] = useState(() => generateText(difficulty))
 
+  const [soundEnabled, setSoundEnabled] = useState(true)
+
   const inputRef = useRef<HTMLInputElement>(null)
-  // eslint-disable-next-line no-unused-vars
-  const { playCorrect: _playCorrect, playIncorrect: _playIncorrect } = useKeystrokeSound()
+  const { playCorrect, playIncorrect } = useKeystrokeSound({ soundEnabled })
 
   // Compute result from engine state and elapsed time
   const computeResult = useCallback(
@@ -82,9 +83,22 @@ export function TestScreen({ difficulty, onFinish }: TestScreenProps) {
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       e.preventDefault() // Prevents Space from scrolling page, etc.
-      engine.handleKey(e.key)
+      const key = e.key
+      // Determine correct/incorrect BEFORE engine processes key — no sound for Space or Backspace
+      if (key.length === 1 && key !== ' ') {
+        const currentWord = engine.words[engine.currentWordIndex]
+        if (currentWord && engine.currentCharIndex < currentWord.chars.length) {
+          const expectedChar = currentWord.chars[engine.currentCharIndex].expected
+          if (key === expectedChar) {
+            playCorrect()
+          } else {
+            playIncorrect()
+          }
+        }
+      }
+      engine.handleKey(key)
     },
-    [engine.handleKey]
+    [engine, playCorrect, playIncorrect]
   )
 
   const handleContainerClick = useCallback(() => {
@@ -107,6 +121,20 @@ export function TestScreen({ difficulty, onFinish }: TestScreenProps) {
     <main className={styles.screen} onClick={handleContainerClick}>
       {/* Visually-hidden heading for screen readers — landmark + page-has-heading-one requirement */}
       <h1 className={styles.srOnly}>Typing Test — Active</h1>
+
+      {/* Sound toggle — top-right, absolute positioned */}
+      <button
+        className={styles.sndToggle}
+        onClick={(e) => {
+          e.stopPropagation()
+          setSoundEnabled(v => !v)
+        }}
+        type="button"
+        aria-label={soundEnabled ? 'Sound on, click to mute' : 'Sound off, click to unmute'}
+        aria-pressed={soundEnabled}
+      >
+        {soundEnabled ? '[ SND: ON ]' : '[ SND: OFF ]'}
+      </button>
 
       {/* Hidden input captures all keystrokes — position absolute, not display:none (must be in tab order) */}
       <input
