@@ -74,5 +74,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 03-01-PLAN.md (Web Audio sounds + SND toggle)
+Stopped at: Completed 03-02-PLAN.md (Caps Lock warning, quit confirmation, pause/resume)
 Resume file: None
