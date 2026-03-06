@@ -25,10 +25,18 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
   const [capsLockOn, setCapsLockOn] = useState(false)
   // R-052/R-053/R-054/R-055/R-056: Quit confirmation state
   const [quitting, setQuitting] = useState(false)
+  // R-063: Wrong key shake trigger counter
+  const [wrongKeyCount, setWrongKeyCount] = useState(0)
+  // R-064: Correct word flash index
+  const [flashWordIndex, setFlashWordIndex] = useState<number | null>(null)
+  // R-068: Cursor blink pause while typing
+  const [isTyping, setIsTyping] = useState(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
   const yesButtonRef = useRef<HTMLButtonElement>(null)
   const noButtonRef = useRef<HTMLButtonElement>(null)
+  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const prevWordIndexRef = useRef(0)
   const { playCorrect, playIncorrect } = useKeystrokeSound({ soundEnabled })
 
   // Compute result from engine state and elapsed time
@@ -100,6 +108,26 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
     }
   }, [])
 
+  // Cleanup typing timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
+    }
+  }, [])
+
+  // R-064: Detect correct word completion for flash animation
+  useEffect(() => {
+    const prevIdx = prevWordIndexRef.current
+    if (engine.currentWordIndex > prevIdx) {
+      const prevWord = engine.words[prevIdx]
+      if (prevWord && prevWord.state === 'correct') {
+        setFlashWordIndex(prevIdx)
+        setTimeout(() => setFlashWordIndex(null), 300)
+      }
+    }
+    prevWordIndexRef.current = engine.currentWordIndex
+  }, [engine.currentWordIndex, engine.words])
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       e.preventDefault() // Prevents Space from scrolling page, etc.
@@ -127,6 +155,14 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
       if (!engine.started && (e.key === ' ' || e.key === 'Backspace')) return
 
       const key = e.key
+
+      // R-068: Track typing activity for cursor blink pause
+      if (key.length === 1) {
+        setIsTyping(true)
+        if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
+        typingTimeoutRef.current = setTimeout(() => setIsTyping(false), 300)
+      }
+
       // Determine correct/incorrect BEFORE engine processes key — no sound for Space or Backspace
       if (key.length === 1 && key !== ' ') {
         const currentWord = engine.words[engine.currentWordIndex]
@@ -136,9 +172,12 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
             playCorrect()
           } else {
             playIncorrect()
+            // R-063: Increment shake counter on wrong keypress
+            setWrongKeyCount(c => c + 1)
           }
         }
       }
+
       engine.handleKey(key)
     },
     [engine, quitting, countdown, playCorrect, playIncorrect]
@@ -204,6 +243,9 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
           words={engine.words}
           currentWordIndex={engine.currentWordIndex}
           currentCharIndex={engine.currentCharIndex}
+          shakeCount={wrongKeyCount}
+          flashWordIndex={flashWordIndex}
+          isTyping={isTyping}
         />
       </div>
 

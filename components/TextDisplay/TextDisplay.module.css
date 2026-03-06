@@ -27,3 +27,21 @@
   /* margin-left: -2px to prevent layout shift from border */
   margin-left: -2px;
 }
+
+.cursorPaused {
+  animation-play-state: paused;
+  opacity: 1;
+}
+
+@keyframes wordFlash {
+  0%   { color: var(--color-green-correct); }
+  100% { color: inherit; }
+}
+
+.flash {
+  animation: wordFlash 0.3s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flash { animation: none; }
+}
