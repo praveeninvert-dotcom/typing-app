@@ -44,6 +44,7 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
   return (
     <motion.main
       className={styles.screen}
+      data-testid="home-screen"
       variants={activeContainerVariants}
       initial="hidden"
       animate="visible"
@@ -61,7 +62,7 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
 
       <motion.div variants={activeItemVariants}>
         <DifficultySelector
-          selected={selectedDifficulty}
+          value={selectedDifficulty}
           onChange={setSelectedDifficulty}
         />
       </motion.div>
@@ -69,6 +70,7 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
       <motion.div variants={activeItemVariants}>
         <button
           className={styles.startButton}
+          data-testid="start-button"
           disabled={selectedDifficulty === null}
           onClick={handleStart}
           onKeyDown={(e) => {
