@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 
 ## Current Position
 
-**Status:** In progress
+**Status:** v1.1 milestone complete
 **Phase:** 04-ui-polish
 **Current Plan:** 04-01, 04-02, 04-03, 04-04 — all complete
 **Phases archived:** Phases 1–2 in `.planning/milestones/v1.0-phases/`

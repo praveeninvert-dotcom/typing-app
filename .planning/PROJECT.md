@@ -51,36 +51,45 @@ Secondary: Anyone who wants a focused, distraction-free typing practice environm
 - ✓ DifficultySelector uses role="radiogroup" and role="radio" — v1.0
 - ✓ Hidden input has aria-label — v1.0
 
-### Active (v1.1 — Phase 3)
+### Active (v1.2 — next milestone)
 
-- [ ] Correct keypress plays typewriter-style click (Web Audio API)
-- [ ] Incorrect keypress plays distinct lower harsh tone
-- [ ] All sounds generated via Web Audio API — no external audio files
-- [ ] Caps Lock on shows warning banner below TextDisplay (role="alert")
-- [ ] Caps Lock warning disappears when Caps Lock turns off
-- [ ] Escape during test shows quit confirmation (YES/NO)
-- [ ] Timer freezes while quit confirmation is visible
-- [ ] YES in quit confirmation returns to home screen, no result shown
-- [ ] NO dismisses confirmation and resumes timer
-- [ ] Escape while confirmation showing dismisses it (same as NO)
-- [ ] Space and Backspace before first character do not start timer
-- [ ] Home screen elements stagger-fade in on mount
-- [ ] Difficulty button selection has pulse and underline slide animation
-- [ ] Screen transitions use fade and slide (already done in v1.0, extend as needed)
-- [ ] Wrong key press shakes current word briefly
-- [ ] Correct word completion triggers brief green flash
-- [ ] Result overlay enters with spring scale animation
-- [ ] Result stats count up from zero on overlay mount (done in v1.0 for WPM/accuracy)
-- [ ] TextDisplay scrolls smoothly when active line changes
-- [ ] Cursor blink pauses while user is actively typing
-- [ ] Caps Lock warning uses role="alert"
-- [ ] Quit confirmation traps focus, returns on dismiss
-- [ ] Result overlay traps focus, Retry gets focus on mount
-- [ ] Test complete announced via aria-live on result mount
+- [ ] R-067: TextDisplay.module.css needs `overflow-y: auto` on `.container` — JS scrollTo() is wired but scroll has no visual effect without the CSS property (single-line fix, deferred from v1.1)
+
+### Validated (v1.1 — Phases 3–4)
+
+- ✓ Correct keypress plays typewriter-style click (Web Audio API square-wave 800Hz) — v1.1
+- ✓ Incorrect keypress plays distinct lower harsh tone (sawtooth 200Hz) — v1.1
+- ✓ All sounds generated via Web Audio API — no external audio files — v1.1
+- ✓ Caps Lock on shows warning banner (role="alert") — v1.1
+- ✓ Caps Lock warning disappears on toggle off — v1.1
+- ✓ Escape shows quit confirmation with YES/NO — v1.1
+- ✓ Timer freezes while quit confirmation visible (pausedRef gate) — v1.1
+- ✓ YES returns home, no result shown — v1.1
+- ✓ NO dismisses and resumes timer — v1.1
+- ✓ Escape while confirmation showing dismisses it — v1.1
+- ✓ Space/Backspace before first character ignored — v1.1
+- ✓ Home screen stagger-fade entrance — v1.1
+- ✓ Difficulty selection pulse + underline slide animation — v1.1
+- ✓ Screen transitions fade and slide — v1.1
+- ✓ Wrong key shakes current word — v1.1
+- ✓ Correct word green flash — v1.1
+- ✓ Result overlay spring scale entrance — v1.1
+- ✓ Result stats count up from zero — v1.1
+- ✓ Cursor blink pauses while actively typing — v1.1
+- ✓ Caps Lock warning uses role="alert" — v1.1
+- ✓ Quit confirmation focus trap, returns on dismiss — v1.1
+- ✓ Result overlay focus trap, RETRY autoFocus — v1.1
+- ✓ Test complete announced via aria-live — v1.1
+- ✓ StarField three-layer CSS parallax star background — v1.1
+- ✓ DifficultySelector horizontal pixel-art cards, amber selected state — v1.1
+- ✓ TestScreen bordered container (900px, amber-dim border) — v1.1
+- ✓ StatsBar 3-column CSS grid with column dividers — v1.1
+- ✓ ResultOverlay retro pixel-border game-over design with PLAY AGAIN? — v1.1
+- ✓ Sound toggle removed — sound always on — v1.1
 
 ### Out of Scope
 
-- Sound toggle UI — Web Audio API only, no UI control in v1
+- Sound toggle UI — removed in v1.1; sound always on; opt-out moved to v2 out-of-scope
 - localStorage score history — no persistence by design
 - Leaderboard — counter to zero-friction philosophy
 - Mobile and touch support — keyboard-first product, web-first
@@ -96,14 +105,16 @@ Secondary: Anyone who wants a focused, distraction-free typing practice environm
 
 ## Context
 
-**Shipped v1.0** with 2,130 LOC TypeScript/TSX/CSS.
-Tech stack: Next.js 14, TypeScript strict, Tailwind CSS, Framer Motion, Web Audio API (stubbed), Vitest, Playwright + axe-core.
+**Shipped v1.1** with 3,473 LOC TypeScript/TSX/CSS.
+Tech stack: Next.js 14, TypeScript strict, Tailwind CSS, Framer Motion, Web Audio API (live — no stub), Vitest, Playwright + axe-core.
 
-**v1.0 test results:** 14 unit tests pass (useTypingEngine), axe-core passes on all three screens (Home, Test, Result).
+**v1.1 test count:** 59+ unit tests (useTypingEngine 14, DifficultySelector 7, StatsBar 13, TestScreen 6, ResultOverlay 15, StarField 4), axe-core passes on all screens including quit confirmation modal.
 
-**Known tech debt from v1.0:**
-- Word-exhaustion stale closure: `onFinish` on exhaustion path may be off by ±1 correct char (timer-expiry is correct)
-- `useKeystrokeSound` is a stub — actual Web Audio implementation deferred to Phase 3
+**Known tech debt from v1.1:**
+- R-067: `TextDisplay.module.css` missing `overflow-y: auto` — JS scroll wired, CSS gap deferred by user. Single-property fix.
+- `useKeystrokeSound` has dead `soundEnabled?: boolean` optional param — never exercised after toggle removal. Cleanup when convenient.
+- 7 items in 04-VERIFICATION.md need human browser confirmation (visual/audio behaviors)
+- Word-exhaustion stale closure from v1.0 still present (carries forward)
 
 ---
 
@@ -118,6 +129,12 @@ Tech stack: Next.js 14, TypeScript strict, Tailwind CSS, Framer Motion, Web Audi
 | testKey counter for TestScreen remount (not motion.div key) | ✓ Good | New word list without triggering parent exit/enter animation |
 | opacity:0 (not display:none) for StatsBar pre-start | ✓ Good | Height always reserved, no layout shift on reveal |
 | useCountUp hook (setTimeout-based, easeOut) | ✓ Good | Clean separation, 10-step odometer feel |
+| pausedRef (not state) gates setInterval in useCountdown | ✓ Good | Zero re-render overhead on pause/resume; reset() also clears it |
+| Lazy AudioContext via useRef in useKeystrokeSound | ✓ Good | Satisfies CLAUDE.md rule: AudioContext never on mount, only on first interaction |
+| Sound toggle removed in Phase 4 (always on) | ✓ Good | Sound is the signature feature; R-200 (toggle UI) moved to v2 out-of-scope |
+| CSS box-shadow star technique for StarField (3 layers) | ✓ Good | Pure CSS, no canvas, no images; prefers-reduced-motion pauses animation |
+| DifficultySelector value prop (not selected) | ✓ Good | Standard controlled component convention; cleaner call site |
+| 3-keyframe spring fix (tween with times:[0,0.5,1]) | ✓ Good | Framer Motion springs support only 2 keyframes; tween with times is correct for bounce |
 
 ---
 
@@ -131,4 +148,4 @@ Tech stack: Next.js 14, TypeScript strict, Tailwind CSS, Framer Motion, Web Audi
 
 ---
 
-*Last updated: 2026-03-05 after v1.0 milestone*
+*Last updated: 2026-03-07 after v1.1 milestone*

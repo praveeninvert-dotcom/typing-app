@@ -63,7 +63,7 @@ export function DifficultySelector({ value, onChange, disabled }: DifficultySele
           animate={reducedMotion ? {} : (value === diff.value ? { scale: [1, 1.05, 1] } : { scale: 1 })}
           transition={
             value === diff.value
-              ? { type: 'spring', stiffness: 400, damping: 20 }
+              ? { type: 'tween', duration: 0.3, times: [0, 0.5, 1], ease: 'easeInOut' }
               : { duration: 0.15 }
           }
         >

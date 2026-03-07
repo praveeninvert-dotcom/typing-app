@@ -3,7 +3,8 @@
 ## Milestones
 
 - ✅ **v1.0 Functional Retro Typing Test** — Phases 1–2 (shipped 2026-03-05)
-- 📋 **v1.1 Sounds + Edge Cases + A11y** — Phase 3 (planned)
+- ✅ **v1.1 Sounds + Edge Cases + Animations + A11y + UI Polish** — Phases 3–4 (shipped 2026-03-07)
+- 📋 **v1.2** — TBD (next milestone)
 
 ## Phases
 
@@ -17,41 +18,22 @@ Full details: `.planning/milestones/v1.0-ROADMAP.md`
 
 </details>
 
-### 📋 v1.1 Sounds + Edge Cases + A11y (Planned)
+<details>
+<summary>✅ v1.1 Sounds + Edge Cases + Animations + A11y + UI Polish (Phases 3–4) — SHIPPED 2026-03-07</summary>
 
-- [ ] Phase 3: Sounds + Edge Cases + Animations + A11y (4 plans)
+- [x] Phase 3: Sounds + Edge Cases + Animations + A11y (4/4 plans) — completed 2026-03-06
+- [x] Phase 4: UI Polish — Retro Aesthetic Completion (4/4 plans) — completed 2026-03-07
 
-**Phase 3 Goal:** Full production quality. All animations, all edge cases, full a11y.
+Full details: `.planning/milestones/v1.1-ROADMAP.md`
 
-Requirements: R-040 to R-042 (sounds), R-050 to R-057 (edge cases), R-060 to R-068 (animations), R-072 to R-074, R-077 (a11y)
+</details>
 
-Plans:
-- [ ] 03-01-PLAN.md — Web Audio API sounds + SND toggle
-- [ ] 03-02-PLAN.md — Caps Lock warning + Escape quit confirmation + Space/Backspace guard
-- [ ] 03-03-PLAN.md — All Framer Motion animations (home stagger, difficulty pulse, slide transitions, shake, flash, scroll, blink pause)
-- [ ] 03-04-PLAN.md — ResultOverlay spring + focus trap + aria-live + reduced motion + axe-core
+### 📋 v1.2 (Planned)
 
-Includes:
-- `hooks/useKeystrokeSound.ts` — Web Audio API, correct (square 800Hz 60ms) and wrong (sawtooth 200Hz 100ms)
-- Caps Lock warning banner with `role="alert"`, fades in/out
-- Escape quit confirmation with timer freeze, YES/NO, focus trap
-- All Framer Motion animations: home stagger, difficulty select pulse + underline, wrong key shake, correct word flash, TextDisplay smooth scroll, result spring
-- Cursor blink pause on active typing (300ms debounce)
-- Focus traps in quit confirmation and result overlay
-- `aria-live` announcement on test complete
+No phases defined yet. Run `/gsd:new-milestone` to start planning.
 
-Exit criteria: Sounds play. Caps Lock warning works. Escape quit flow complete. All animations play. axe-core passes. Focus trapped in both overlays.
-
-### Phase 4: UI Polish — Retro Aesthetic Completion
-
-**Goal:** StarField background, horizontal difficulty cards, bordered test container with 3-column stats, retro game-over result overlay. Sound toggle removed (always on).
-**Requirements:** R-001, R-020–R-024, R-030–R-034, R-040–R-041, R-061, R-065–R-066, R-074–R-075
-
-Plans:
-- [x] 04-01-PLAN.md — StarField three-layer CSS star background (completed 2026-03-07)
-- [x] 04-02-PLAN.md — DifficultySelector horizontal pixel-art cards (completed 2026-03-07)
-- [x] 04-03-PLAN.md — TestScreen bordered container + StatsBar 3-column grid (completed 2026-03-07)
-- [x] 04-04-PLAN.md — ResultOverlay retro game-over redesign (completed 2026-03-07)
+**Known carryover from v1.1:**
+- R-067: Add `overflow-y: auto` to `TextDisplay.module.css` (single CSS property, deferred by user)
 
 ## Progress
 
