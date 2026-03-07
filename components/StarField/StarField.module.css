@@ -1,0 +1,173 @@
+.starField {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Each layer is a single 1px (or 2px for near) div.
+   Stars are CSS box-shadows. Each star position is duplicated 100vh above
+   for seamless infinite scroll: as first set exits bottom, second set enters from top. */
+
+@keyframes scrollStars {
+  from { transform: translateY(0); }
+  to   { transform: translateY(100vh); }
+}
+
+/* Layer 1 — far, slowest (120s), 60 stars at 1px, white 0.3 + amber 0.2 */
+.layer1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  border-radius: 0;
+  animation: scrollStars 120s linear infinite;
+  box-shadow:
+    2vw 4vh 0 0 rgba(255,255,255,0.3),   2vw -96vh 0 0 rgba(255,255,255,0.3),
+    7vw 15vh 0 0 rgba(255,255,255,0.3),   7vw -85vh 0 0 rgba(255,255,255,0.3),
+    12vw 31vh 0 0 rgba(255,255,255,0.3),  12vw -69vh 0 0 rgba(255,255,255,0.3),
+    17vw 48vh 0 0 rgba(255,255,255,0.3),  17vw -52vh 0 0 rgba(255,255,255,0.3),
+    22vw 62vh 0 0 rgba(255,255,255,0.3),  22vw -38vh 0 0 rgba(255,255,255,0.3),
+    27vw 77vh 0 0 rgba(255,255,255,0.3),  27vw -23vh 0 0 rgba(255,255,255,0.3),
+    32vw 89vh 0 0 rgba(255,255,255,0.3),  32vw -11vh 0 0 rgba(255,255,255,0.3),
+    37vw 6vh 0 0 rgba(255,255,255,0.3),   37vw -94vh 0 0 rgba(255,255,255,0.3),
+    42vw 21vh 0 0 rgba(255,255,255,0.3),  42vw -79vh 0 0 rgba(255,255,255,0.3),
+    47vw 37vh 0 0 rgba(255,255,255,0.3),  47vw -63vh 0 0 rgba(255,255,255,0.3),
+    52vw 53vh 0 0 rgba(255,255,255,0.3),  52vw -47vh 0 0 rgba(255,255,255,0.3),
+    57vw 68vh 0 0 rgba(255,255,255,0.3),  57vw -32vh 0 0 rgba(255,255,255,0.3),
+    62vw 84vh 0 0 rgba(255,255,255,0.3),  62vw -16vh 0 0 rgba(255,255,255,0.3),
+    67vw 11vh 0 0 rgba(255,255,255,0.3),  67vw -89vh 0 0 rgba(255,255,255,0.3),
+    72vw 26vh 0 0 rgba(255,255,255,0.3),  72vw -74vh 0 0 rgba(255,255,255,0.3),
+    77vw 43vh 0 0 rgba(255,255,255,0.3),  77vw -57vh 0 0 rgba(255,255,255,0.3),
+    82vw 59vh 0 0 rgba(255,255,255,0.3),  82vw -41vh 0 0 rgba(255,255,255,0.3),
+    87vw 74vh 0 0 rgba(255,255,255,0.3),  87vw -26vh 0 0 rgba(255,255,255,0.3),
+    92vw 91vh 0 0 rgba(255,255,255,0.3),  92vw -9vh 0 0 rgba(255,255,255,0.3),
+    97vw 18vh 0 0 rgba(255,255,255,0.3),  97vw -82vh 0 0 rgba(255,255,255,0.3),
+    3vw 35vh 0 0 rgba(255,255,255,0.3),   3vw -65vh 0 0 rgba(255,255,255,0.3),
+    8vw 51vh 0 0 rgba(255,255,255,0.3),   8vw -49vh 0 0 rgba(255,255,255,0.3),
+    13vw 67vh 0 0 rgba(255,255,255,0.3),  13vw -33vh 0 0 rgba(255,255,255,0.3),
+    18vw 83vh 0 0 rgba(255,255,255,0.3),  18vw -17vh 0 0 rgba(255,255,255,0.3),
+    23vw 9vh 0 0 rgba(255,255,255,0.3),   23vw -91vh 0 0 rgba(255,255,255,0.3),
+    28vw 25vh 0 0 rgba(255,255,255,0.3),  28vw -75vh 0 0 rgba(255,255,255,0.3),
+    33vw 41vh 0 0 rgba(255,255,255,0.3),  33vw -59vh 0 0 rgba(255,255,255,0.3),
+    38vw 57vh 0 0 rgba(255,255,255,0.3),  38vw -43vh 0 0 rgba(255,255,255,0.3),
+    43vw 73vh 0 0 rgba(255,255,255,0.3),  43vw -27vh 0 0 rgba(255,255,255,0.3),
+    48vw 88vh 0 0 rgba(255,255,255,0.3),  48vw -12vh 0 0 rgba(255,255,255,0.3),
+    53vw 14vh 0 0 rgba(255,255,255,0.3),  53vw -86vh 0 0 rgba(255,255,255,0.3),
+    58vw 29vh 0 0 rgba(255,255,255,0.3),  58vw -71vh 0 0 rgba(255,255,255,0.3),
+    63vw 46vh 0 0 rgba(255,255,255,0.3),  63vw -54vh 0 0 rgba(255,255,255,0.3),
+    68vw 62vh 0 0 rgba(255,255,255,0.3),  68vw -38vh 0 0 rgba(255,255,255,0.3),
+    73vw 79vh 0 0 rgba(255,255,255,0.3),  73vw -21vh 0 0 rgba(255,255,255,0.3),
+    78vw 95vh 0 0 rgba(255,255,255,0.3),  78vw -5vh 0 0 rgba(255,255,255,0.3),
+    83vw 22vh 0 0 rgba(255,255,255,0.3),  83vw -78vh 0 0 rgba(255,255,255,0.3),
+    88vw 39vh 0 0 rgba(255,255,255,0.3),  88vw -61vh 0 0 rgba(255,255,255,0.3),
+    93vw 56vh 0 0 rgba(255,255,255,0.3),  93vw -44vh 0 0 rgba(255,255,255,0.3),
+    98vw 73vh 0 0 rgba(255,255,255,0.3),  98vw -27vh 0 0 rgba(255,255,255,0.3),
+    5vw 87vh 0 0 rgba(255,255,255,0.3),   5vw -13vh 0 0 rgba(255,255,255,0.3),
+    10vw 44vh 0 0 rgba(255,255,255,0.3),  10vw -56vh 0 0 rgba(255,255,255,0.3),
+    15vw 60vh 0 0 rgba(255,255,255,0.3),  15vw -40vh 0 0 rgba(255,255,255,0.3),
+    20vw 75vh 0 0 rgba(255,255,255,0.3),  20vw -25vh 0 0 rgba(255,255,255,0.3),
+    25vw 92vh 0 0 rgba(255,255,255,0.3),  25vw -8vh 0 0 rgba(255,255,255,0.3),
+    30vw 19vh 0 0 rgba(255,255,255,0.3),  30vw -81vh 0 0 rgba(255,255,255,0.3),
+    35vw 36vh 0 0 rgba(255,255,255,0.3),  35vw -64vh 0 0 rgba(255,255,255,0.3),
+    40vw 52vh 0 0 rgba(255,255,255,0.3),  40vw -48vh 0 0 rgba(255,255,255,0.3),
+    45vw 69vh 0 0 rgba(255,255,255,0.3),  45vw -31vh 0 0 rgba(255,255,255,0.3),
+    50vw 85vh 0 0 rgba(255,255,255,0.3),  50vw -15vh 0 0 rgba(255,255,255,0.3),
+    55vw 11vh 0 0 rgba(255,255,255,0.3),  55vw -89vh 0 0 rgba(255,255,255,0.3),
+    60vw 27vh 0 0 rgba(255,255,255,0.3),  60vw -73vh 0 0 rgba(255,255,255,0.3),
+    65vw 44vh 0 0 rgba(255,255,255,0.3),  65vw -56vh 0 0 rgba(255,255,255,0.3),
+    70vw 61vh 0 0 rgba(255,255,255,0.3),  70vw -39vh 0 0 rgba(255,255,255,0.3),
+    75vw 78vh 0 0 rgba(255,255,255,0.3),  75vw -22vh 0 0 rgba(255,255,255,0.3),
+    14vw 38vh 0 0 rgba(255,176,0,0.2),    14vw -62vh 0 0 rgba(255,176,0,0.2),
+    39vw 66vh 0 0 rgba(255,176,0,0.2),    39vw -34vh 0 0 rgba(255,176,0,0.2),
+    61vw 14vh 0 0 rgba(255,176,0,0.2),    61vw -86vh 0 0 rgba(255,176,0,0.2),
+    84vw 50vh 0 0 rgba(255,176,0,0.2),    84vw -50vh 0 0 rgba(255,176,0,0.2),
+    96vw 82vh 0 0 rgba(255,176,0,0.2),    96vw -18vh 0 0 rgba(255,176,0,0.2);
+}
+
+/* Layer 2 — mid (80s), 35 stars at 1px, white 0.5 + blue 0.3 */
+.layer2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  border-radius: 0;
+  animation: scrollStars 80s linear infinite;
+  box-shadow:
+    4vw 8vh 0 0 rgba(255,255,255,0.5),   4vw -92vh 0 0 rgba(255,255,255,0.5),
+    11vw 22vh 0 0 rgba(255,255,255,0.5),  11vw -78vh 0 0 rgba(255,255,255,0.5),
+    19vw 40vh 0 0 rgba(255,255,255,0.5),  19vw -60vh 0 0 rgba(255,255,255,0.5),
+    26vw 58vh 0 0 rgba(255,255,255,0.5),  26vw -42vh 0 0 rgba(255,255,255,0.5),
+    34vw 73vh 0 0 rgba(255,255,255,0.5),  34vw -27vh 0 0 rgba(255,255,255,0.5),
+    41vw 87vh 0 0 rgba(255,255,255,0.5),  41vw -13vh 0 0 rgba(255,255,255,0.5),
+    49vw 16vh 0 0 rgba(255,255,255,0.5),  49vw -84vh 0 0 rgba(255,255,255,0.5),
+    56vw 33vh 0 0 rgba(255,255,255,0.5),  56vw -67vh 0 0 rgba(255,255,255,0.5),
+    64vw 49vh 0 0 rgba(255,255,255,0.5),  64vw -51vh 0 0 rgba(255,255,255,0.5),
+    71vw 65vh 0 0 rgba(255,255,255,0.5),  71vw -35vh 0 0 rgba(255,255,255,0.5),
+    79vw 81vh 0 0 rgba(255,255,255,0.5),  79vw -19vh 0 0 rgba(255,255,255,0.5),
+    86vw 97vh 0 0 rgba(255,255,255,0.5),  86vw -3vh 0 0 rgba(255,255,255,0.5),
+    94vw 28vh 0 0 rgba(255,255,255,0.5),  94vw -72vh 0 0 rgba(255,255,255,0.5),
+    2vw 55vh 0 0 rgba(255,255,255,0.5),   2vw -45vh 0 0 rgba(255,255,255,0.5),
+    9vw 71vh 0 0 rgba(255,255,255,0.5),   9vw -29vh 0 0 rgba(255,255,255,0.5),
+    16vw 88vh 0 0 rgba(255,255,255,0.5),  16vw -12vh 0 0 rgba(255,255,255,0.5),
+    24vw 14vh 0 0 rgba(255,255,255,0.5),  24vw -86vh 0 0 rgba(255,255,255,0.5),
+    31vw 31vh 0 0 rgba(255,255,255,0.5),  31vw -69vh 0 0 rgba(255,255,255,0.5),
+    44vw 47vh 0 0 rgba(255,255,255,0.5),  44vw -53vh 0 0 rgba(255,255,255,0.5),
+    51vw 63vh 0 0 rgba(255,255,255,0.5),  51vw -37vh 0 0 rgba(255,255,255,0.5),
+    59vw 80vh 0 0 rgba(255,255,255,0.5),  59vw -20vh 0 0 rgba(255,255,255,0.5),
+    66vw 5vh 0 0 rgba(255,255,255,0.5),   66vw -95vh 0 0 rgba(255,255,255,0.5),
+    74vw 23vh 0 0 rgba(255,255,255,0.5),  74vw -77vh 0 0 rgba(255,255,255,0.5),
+    81vw 41vh 0 0 rgba(255,255,255,0.5),  81vw -59vh 0 0 rgba(255,255,255,0.5),
+    89vw 58vh 0 0 rgba(255,255,255,0.5),  89vw -42vh 0 0 rgba(255,255,255,0.5),
+    97vw 75vh 0 0 rgba(255,255,255,0.5),  97vw -25vh 0 0 rgba(255,255,255,0.5),
+    6vw 92vh 0 0 rgba(255,255,255,0.5),   6vw -8vh 0 0 rgba(255,255,255,0.5),
+    21vw 36vh 0 0 rgba(255,255,255,0.5),  21vw -64vh 0 0 rgba(255,255,255,0.5),
+    36vw 53vh 0 0 rgba(255,255,255,0.5),  36vw -47vh 0 0 rgba(255,255,255,0.5),
+    76vw 69vh 0 0 rgba(255,255,255,0.5),  76vw -31vh 0 0 rgba(255,255,255,0.5),
+    29vw 12vh 0 0 rgba(0,170,255,0.3),    29vw -88vh 0 0 rgba(0,170,255,0.3),
+    54vw 44vh 0 0 rgba(0,170,255,0.3),    54vw -56vh 0 0 rgba(0,170,255,0.3),
+    69vw 77vh 0 0 rgba(0,170,255,0.3),    69vw -23vh 0 0 rgba(0,170,255,0.3),
+    84vw 20vh 0 0 rgba(0,170,255,0.3),    84vw -80vh 0 0 rgba(0,170,255,0.3),
+    91vw 86vh 0 0 rgba(0,170,255,0.3),    91vw -14vh 0 0 rgba(0,170,255,0.3);
+}
+
+/* Layer 3 — near, fastest (50s), 15 stars at 2px, white 0.7 */
+.layer3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  border-radius: 0;
+  animation: scrollStars 50s linear infinite;
+  box-shadow:
+    8vw 17vh 0 0 rgba(255,255,255,0.7),   8vw -83vh 0 0 rgba(255,255,255,0.7),
+    23vw 38vh 0 0 rgba(255,255,255,0.7),  23vw -62vh 0 0 rgba(255,255,255,0.7),
+    38vw 59vh 0 0 rgba(255,255,255,0.7),  38vw -41vh 0 0 rgba(255,255,255,0.7),
+    53vw 79vh 0 0 rgba(255,255,255,0.7),  53vw -21vh 0 0 rgba(255,255,255,0.7),
+    68vw 13vh 0 0 rgba(255,255,255,0.7),  68vw -87vh 0 0 rgba(255,255,255,0.7),
+    83vw 34vh 0 0 rgba(255,255,255,0.7),  83vw -66vh 0 0 rgba(255,255,255,0.7),
+    98vw 55vh 0 0 rgba(255,255,255,0.7),  98vw -45vh 0 0 rgba(255,255,255,0.7),
+    13vw 76vh 0 0 rgba(255,255,255,0.7),  13vw -24vh 0 0 rgba(255,255,255,0.7),
+    28vw 97vh 0 0 rgba(255,255,255,0.7),  28vw -3vh 0 0 rgba(255,255,255,0.7),
+    43vw 24vh 0 0 rgba(255,255,255,0.7),  43vw -76vh 0 0 rgba(255,255,255,0.7),
+    58vw 45vh 0 0 rgba(255,255,255,0.7),  58vw -55vh 0 0 rgba(255,255,255,0.7),
+    73vw 66vh 0 0 rgba(255,255,255,0.7),  73vw -34vh 0 0 rgba(255,255,255,0.7),
+    88vw 87vh 0 0 rgba(255,255,255,0.7),  88vw -13vh 0 0 rgba(255,255,255,0.7),
+    3vw 48vh 0 0 rgba(255,255,255,0.7),   3vw -52vh 0 0 rgba(255,255,255,0.7),
+    48vw 3vh 0 0 rgba(255,255,255,0.7),   48vw -97vh 0 0 rgba(255,255,255,0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer1,
+  .layer2,
+  .layer3 {
+    animation: none;
+  }
+}
