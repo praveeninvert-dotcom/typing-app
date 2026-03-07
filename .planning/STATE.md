@@ -12,9 +12,9 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 
 ## Current Position
 
-**Status:** Milestone complete
-**Phase:** 03-sounds-edge-cases-animations-a11y
-**Current Plan:** Not started
+**Status:** In progress
+**Phase:** 04-ui-polish
+**Current Plan:** 04-04 complete (04-04-SUMMARY.md created)
 **Phases archived:** Phases 1–2 in `.planning/milestones/v1.0-phases/`
 
 ---
@@ -56,6 +56,9 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 33. pausedRef (not state) gates setInterval tick in useCountdown — zero re-render overhead on pause/resume; reset() also clears it to prevent stuck-paused state (03-02).
 34. Caps Lock monitored on both hidden input keydown and window listener — catches OS-level toggle outside the focused input (03-02).
 35. Focus trap for quit modal implemented on quitOverlay onKeyDown (not document) — simpler lifecycle, Tab cycles between YES/NO refs only (03-02).
+36. ResultOverlay preserves result: ResultState prop interface (not flat props) — matches TypingApp.tsx call site; flat props would require TypingApp modification for no benefit (04-04).
+37. ResultOverlay count-up uses setTimeout chains (not rAF loop) — predictable 10 visible steps match retro odometer aesthetic, simpler cleanup than animation frame loop (04-04).
+38. ResultOverlay staggered reveal: breakdown 900ms, playAgain 1100ms, buttons 1300ms — progressive disclosure adds visual rhythm without Framer Motion complexity for these later elements (04-04).
 
 ---
 
@@ -73,6 +76,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-06
-Stopped at: Completed 03-02-PLAN.md (Caps Lock warning, quit confirmation, pause/resume)
+Last session: 2026-03-07
+Stopped at: Completed 04-04-PLAN.md (ResultOverlay retro redesign + tests)
 Resume file: None
