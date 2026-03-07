@@ -20,7 +20,6 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
   // Words generated once on mount via lazy initializer — stable reference
   const [words] = useState(() => generateText(difficulty))
 
-  const [soundEnabled, setSoundEnabled] = useState(true)
   // R-050/R-051: Caps Lock detection state
   const [capsLockOn, setCapsLockOn] = useState(false)
   // R-052/R-053/R-054/R-055/R-056: Quit confirmation state
@@ -37,7 +36,8 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
   const noButtonRef = useRef<HTMLButtonElement>(null)
   const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const prevWordIndexRef = useRef(0)
-  const { playCorrect, playIncorrect } = useKeystrokeSound({ soundEnabled })
+  // Sound always on — no UI toggle
+  const { playCorrect, playIncorrect } = useKeystrokeSound()
 
   // Compute result from engine state and elapsed time
   const computeResult = useCallback(
@@ -200,23 +200,9 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
   const timeWarning = engine.started && countdown.timeLeft <= 10 && countdown.timeLeft > 0
 
   return (
-    <main className={styles.screen} onClick={handleContainerClick}>
+    <main className={styles.screen} data-testid="test-screen" onClick={handleContainerClick}>
       {/* Visually-hidden heading for screen readers — landmark + page-has-heading-one requirement */}
       <h1 className={styles.srOnly}>Typing Test — Active</h1>
-
-      {/* Sound toggle — top-right, absolute positioned */}
-      <button
-        className={styles.sndToggle}
-        onClick={(e) => {
-          e.stopPropagation()
-          setSoundEnabled(v => !v)
-        }}
-        type="button"
-        aria-label={soundEnabled ? 'Sound on, click to mute' : 'Sound off, click to unmute'}
-        aria-pressed={soundEnabled}
-      >
-        {soundEnabled ? '[ SND: ON ]' : '[ SND: OFF ]'}
-      </button>
 
       {/* Hidden input captures all keystrokes — position absolute, not display:none (must be in tab order) */}
       <input
@@ -230,37 +216,39 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
         readOnly={engine.finished}
       />
 
-      <StatsBar
-        wpm={wpm}
-        timeLeft={countdown.timeLeft}
-        accuracy={accuracy}
-        started={engine.started}
-        timeWarning={timeWarning}
-      />
-
-      <div className={styles.textDisplayContainer}>
-        <TextDisplay
-          words={engine.words}
-          currentWordIndex={engine.currentWordIndex}
-          currentCharIndex={engine.currentCharIndex}
-          shakeCount={wrongKeyCount}
-          flashWordIndex={flashWordIndex}
-          isTyping={isTyping}
+      <div className={styles.container} data-testid="test-container">
+        <StatsBar
+          wpm={wpm}
+          timeLeft={countdown.timeLeft}
+          accuracy={accuracy}
+          started={engine.started}
+          timeWarning={timeWarning}
         />
-      </div>
 
-      {/* R-050/R-051: Caps Lock warning — role="alert" for screen readers */}
-      {capsLockOn && (
-        <div
-          className={styles.capsWarning}
-          role="alert"
-          aria-live="assertive"
-        >
-          {'⚠ CAPS LOCK ON'}
+        <div className={styles.textDisplayContainer} data-testid="text-display">
+          <TextDisplay
+            words={engine.words}
+            currentWordIndex={engine.currentWordIndex}
+            currentCharIndex={engine.currentCharIndex}
+            shakeCount={wrongKeyCount}
+            flashWordIndex={flashWordIndex}
+            isTyping={isTyping}
+          />
         </div>
-      )}
 
-      <p className={styles.escapeHint}>{'[ ESC ] QUIT'}</p>
+        {/* R-050/R-051: Caps Lock warning — role="alert" for screen readers */}
+        {capsLockOn && (
+          <div
+            className={styles.capsWarning}
+            role="alert"
+            aria-live="assertive"
+          >
+            {'⚠ CAPS LOCK ON'}
+          </div>
+        )}
+
+        <p className={styles.escapeHint}>{'[ ESC ] QUIT'}</p>
+      </div>
 
       {/* R-052/R-053/R-054/R-055/R-056/R-073: Quit confirmation overlay */}
       {quitting && (
