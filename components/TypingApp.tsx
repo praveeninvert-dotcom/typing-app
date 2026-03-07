@@ -5,6 +5,7 @@ import type { Screen, Difficulty, ResultState } from '@/types'
 import { HomeScreen } from '@/components/HomeScreen'
 import { TestScreen } from '@/components/TestScreen'
 import { ResultOverlay } from '@/components/ResultOverlay'
+import { StarField } from '@/components/StarField/StarField'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 
 const screenVariants = {
@@ -44,6 +45,8 @@ export function TypingApp() {
   }
 
   return (
+    <>
+    <StarField />
     <AnimatePresence mode="wait">
       {screen === 'home' && (
         <motion.div
@@ -106,5 +109,6 @@ export function TypingApp() {
         </motion.div>
       )}
     </AnimatePresence>
+    </>
   )
 }
