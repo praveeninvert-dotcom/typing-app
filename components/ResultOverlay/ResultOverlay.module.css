@@ -1,37 +1,68 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
 }
 
 .modal {
+  position: relative;
+  z-index: 101;
   background: var(--color-surface);
-  border: 1px solid var(--color-amber);
-  padding: 2rem 3rem;
+  border: 2px solid var(--color-amber);
+  box-shadow:
+    0 0 0 2px var(--color-bg),
+    0 0 0 4px var(--color-amber),
+    0 0 40px rgba(255,176,0,0.15);
+  border-radius: 0;
+  padding: 48px 40px;
+  max-width: 520px;
+  width: 90%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  max-width: 480px;
-  width: 90%;
+  gap: 0;
 }
 
 .header {
   font-family: var(--font-press-start);
   font-size: 14px;
   color: var(--color-amber);
-  margin: 0;
+  margin: 0 0 32px 0;
+  text-align: center;
 }
 
-.statGroup {
+/* Stat boxes row */
+.statRow {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.wpmBox {
+  border: 1px solid var(--color-amber-dim);
+  padding: 16px 24px;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: 8px;
+}
+
+.accBox {
+  border: 1px solid var(--color-blue-dim);
+  padding: 16px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
 .wpmValue {
@@ -41,32 +72,35 @@
   line-height: 1;
 }
 
-.accuracyValue {
+.accValue {
   font-family: var(--font-vt323);
   font-size: 72px;
   color: var(--color-blue);
   line-height: 1;
 }
 
-.statLabel {
+.boxLabel {
   font-family: var(--font-press-start);
-  font-size: 9px;
-}
-
-.statLabelAmber {
+  font-size: 8px;
   color: var(--color-amber-dim);
 }
 
-.statLabelBlue {
+.boxLabelBlue {
   color: var(--color-blue-dim);
 }
 
+/* Character breakdown */
 .breakdown {
   font-family: var(--font-vt323);
   font-size: 24px;
-  /* Override: start invisible, JS adds .breakdownVisible at ~900ms */
+  text-align: center;
   opacity: 0;
   transition: opacity 200ms ease-in;
+  margin-bottom: 24px;
+}
+
+.breakdownVisible {
+  opacity: 1;
 }
 
 .correct {
@@ -74,40 +108,75 @@
 }
 
 .separator {
-  color: var(--color-text-dim);
+  color: #f0f0f0;
 }
 
 .incorrect {
   color: var(--color-red-wrong);
 }
 
-/* Character breakdown fade-in — appears after accuracy count-up ends */
-.breakdownVisible {
+/* Dashed divider */
+.divider {
+  border-top: 1px dashed var(--color-amber-dim);
+  width: 80%;
+  margin: 0 auto 24px auto;
+}
+
+/* "PLAY AGAIN?" text */
+.playAgain {
+  font-family: var(--font-vt323);
+  font-size: 24px;
+  color: var(--color-amber-dim);
+  text-align: center;
+  letter-spacing: 0.1em;
+  margin: 0 0 20px 0;
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+}
+
+.playAgainVisible {
   opacity: 1;
 }
 
+/* Buttons row */
 .buttons {
   display: flex;
-  gap: 1rem;
+  gap: 16px;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+}
+
+.buttonsVisible {
+  opacity: 1;
 }
 
 .button {
   font-family: var(--font-press-start);
-  font-size: 12px;
-  border: 1px solid var(--color-amber);
-  color: var(--color-amber);
+  font-size: 10px;
+  padding: 12px 24px;
+  border: 2px solid var(--color-amber-dim);
+  box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-amber-dim);
+  border-radius: 0;
+  color: var(--color-amber-dim);
   background: transparent;
-  padding: 0.5rem 1.5rem;
   cursor: pointer;
+  transition: border-color 150ms, color 150ms, box-shadow 150ms;
 }
 
 .button:hover {
-  background: rgba(255, 176, 0, 0.1);
+  border-color: var(--color-amber);
+  box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-amber), 0 0 12px rgba(255,176,0,0.3);
+  color: var(--color-amber);
 }
 
 .button:focus-visible {
   outline: 2px solid var(--color-amber);
-  outline-offset: 2px;
+  outline-offset: 4px;
+}
+
+.button:active {
+  transform: scale(0.95);
 }
 
 .srOnly {
