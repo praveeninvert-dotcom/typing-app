@@ -14,27 +14,39 @@ export function StatsBar({ wpm, timeLeft, accuracy, started, timeWarning }: Stat
   return (
     <motion.div
       className={styles.bar}
-      initial={{ opacity: 0, y: -8 }}
-      animate={started ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+      data-testid="stats-bar"
+      initial={{ opacity: 0 }}
+      animate={started ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.2, ease: 'easeOut' }}
       aria-hidden={!started}
       style={{ pointerEvents: started ? 'auto' : 'none' }}
     >
-      <div className={styles.slot}>
-        <span className={`${styles.label} ${styles.labelAmber}`}>WPM</span>
-        <span className={`${styles.value} ${styles.valueAmber}`}>{wpm}</span>
+      <div className={styles.col}>
+        <span className={styles.label}>WPM</span>
+        <span
+          className={`${styles.value} ${styles.valueAmber}`}
+          data-testid="stat-wpm"
+        >
+          {wpm}
+        </span>
       </div>
-      <div className={styles.slot}>
-        <span className={`${styles.label} ${styles.labelBlue}`}>TIME</span>
+
+      <div className={`${styles.col} ${styles.colMiddle}`}>
+        <span className={styles.label}>TIME</span>
         <span
           className={`${styles.value} ${timeWarning ? styles.valueRed : styles.valueBlue} ${timeWarning ? styles.timePulse : ''}`}
+          data-testid="stat-time"
         >
           {timeLeft}
         </span>
       </div>
-      <div className={styles.slot}>
-        <span className={`${styles.label} ${styles.labelDim}`}>ACC</span>
-        <span className={`${styles.value} ${styles.valueWhite}`}>
+
+      <div className={styles.col}>
+        <span className={styles.label}>ACC</span>
+        <span
+          className={`${styles.value} ${styles.valueWhite}`}
+          data-testid="stat-acc"
+        >
           {accuracy !== null ? `${accuracy}%` : '—'}
         </span>
       </div>
