@@ -42,14 +42,16 @@ Includes:
 
 Exit criteria: Sounds play. Caps Lock warning works. Escape quit flow complete. All animations play. axe-core passes. Focus trapped in both overlays.
 
-### Phase 4: Fix TextDisplay Auto-Scroll CSS (Gap Closure)
+### Phase 4: UI Polish — Retro Aesthetic Completion
 
-**Goal:** Make TextDisplay a proper scroll container so the JS scrollTo() call has visual effect.
-**Requirements:** R-067
-**Gap Closure:** Closes gap identified in v1.1 audit — CSS prerequisites missing for auto-scroll
+**Goal:** StarField background, horizontal difficulty cards, bordered test container with 3-column stats, retro game-over result overlay. Sound toggle removed (always on).
+**Requirements:** R-001, R-020–R-024, R-030–R-034, R-040–R-041, R-061, R-065–R-066, R-074–R-075
 
 Plans:
-- [ ] 04-01-PLAN.md — Add overflow-y: auto and max-height to TextDisplay .container
+- [x] 04-01-PLAN.md — StarField three-layer CSS star background (completed 2026-03-07)
+- [x] 04-02-PLAN.md — DifficultySelector horizontal pixel-art cards (completed 2026-03-07)
+- [x] 04-03-PLAN.md — TestScreen bordered container + StatsBar 3-column grid (completed 2026-03-07)
+- [x] 04-04-PLAN.md — ResultOverlay retro game-over redesign (completed 2026-03-07)
 
 ## Progress
 
@@ -58,4 +60,4 @@ Plans:
 | 1. Foundation + Core Typing Engine | v1.0 | 6/6 | Complete | 2026-03-05 |
 | 2. Live Stats + Result Polish | v1.0 | 3/3 | Complete | 2026-03-05 |
 | 3. Sounds + Edge Cases + Animations + A11y | v1.1 | 4/4 | Complete | 2026-03-06 |
-| 4. Fix TextDisplay Auto-Scroll CSS | 3/4 | In Progress|  | — |
+| 4. UI Polish — Retro Aesthetic Completion | v1.1 | 4/4 | Complete | 2026-03-07 |

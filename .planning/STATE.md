@@ -6,7 +6,7 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 
 **What:** Retro terminal-style typing speed test. 60s, 3 difficulty levels, Web Audio API sounds.
 **Core value:** Zero friction. Load, pick difficulty, type. No accounts, no storage.
-**Current focus:** Planning next milestone (v1.1 — Phase 3: Sounds + Edge Cases + A11y)
+**Current focus:** Phase 4 UI Polish complete — v1.1 milestone ready for audit
 
 ---
 
@@ -14,7 +14,7 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 
 **Status:** In progress
 **Phase:** 04-ui-polish
-**Current Plan:** 04-04 complete (04-04-SUMMARY.md created)
+**Current Plan:** 04-01, 04-02, 04-03, 04-04 — all complete
 **Phases archived:** Phases 1–2 in `.planning/milestones/v1.0-phases/`
 
 ---
@@ -62,6 +62,8 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 39. Sound toggle button fully removed from TestScreen (04-03) — sound always on, no user opt-out; useKeystrokeSound still called, playCorrect/playIncorrect still fire on every keypress (R-040, R-041).
 40. timeWarning prop retained on StatsBar (04-03) — computed as timeLeft <= 10 && started && timeLeft > 0 in TestScreen rather than inside StatsBar; keeps StatsBar pure and independently testable.
 41. CSS grid 1fr/1fr/1fr for StatsBar (04-03) — middle column left+right border dividers; font-variant-numeric:tabular-nums + min-width:80px on all stat values prevents layout shift.
+42. StarField uses CSS box-shadow on 1px×1px divs (3 layers: 120s/80s/50s) — pure CSS, no canvas, prefers-reduced-motion pauses animation (04-01).
+43. DifficultySelector switched to value prop (not selected) — motion.button with amber selected state rgba(180,100,0,0.35), horizontal flex row, role=radiogroup/radio (04-02).
 
 ---
 
@@ -80,5 +82,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-07
-Stopped at: Completed 04-03-PLAN.md (TestScreen container + StatsBar 3-column grid redesign)
+Stopped at: Phase 04-ui-polish complete — all 4 plans executed (StarField, DifficultySelector, TestScreen/StatsBar, ResultOverlay)
 Resume file: None
