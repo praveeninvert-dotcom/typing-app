@@ -59,6 +59,9 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 36. ResultOverlay preserves result: ResultState prop interface (not flat props) — matches TypingApp.tsx call site; flat props would require TypingApp modification for no benefit (04-04).
 37. ResultOverlay count-up uses setTimeout chains (not rAF loop) — predictable 10 visible steps match retro odometer aesthetic, simpler cleanup than animation frame loop (04-04).
 38. ResultOverlay staggered reveal: breakdown 900ms, playAgain 1100ms, buttons 1300ms — progressive disclosure adds visual rhythm without Framer Motion complexity for these later elements (04-04).
+39. Sound toggle button fully removed from TestScreen (04-03) — sound always on, no user opt-out; useKeystrokeSound still called, playCorrect/playIncorrect still fire on every keypress (R-040, R-041).
+40. timeWarning prop retained on StatsBar (04-03) — computed as timeLeft <= 10 && started && timeLeft > 0 in TestScreen rather than inside StatsBar; keeps StatsBar pure and independently testable.
+41. CSS grid 1fr/1fr/1fr for StatsBar (04-03) — middle column left+right border dividers; font-variant-numeric:tabular-nums + min-width:80px on all stat values prevents layout shift.
 
 ---
 
@@ -77,5 +80,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-07
-Stopped at: Completed 04-04-PLAN.md (ResultOverlay retro redesign + tests)
+Stopped at: Completed 04-03-PLAN.md (TestScreen container + StatsBar 3-column grid redesign)
 Resume file: None
