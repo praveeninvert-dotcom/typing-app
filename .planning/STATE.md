@@ -79,7 +79,17 @@ None.
 
 ---
 
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 1 | Replace word list system with meaningful paragraph sets | 2026-05-10 | 69a2ac2 | [1-replace-word-list-system-with-meaningful](./quick/1-replace-word-list-system-with-meaningful/) |
+
+---
+
 ## Session Continuity
+
+Last activity: 2026-05-10 - Completed quick task 1: Replace word list system with meaningful paragraph sets
 
 Last session: 2026-03-07
 Stopped at: Phase 04-ui-polish complete — all 4 plans executed (StarField, DifficultySelector, TestScreen/StatsBar, ResultOverlay)
