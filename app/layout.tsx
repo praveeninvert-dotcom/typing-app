@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Press_Start_2P, VT323 } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-// Press Start 2P is NOT a variable font — weight must be specified
 const pressStart2P = Press_Start_2P({
   weight: '400',
   subsets: ['latin'],
@@ -10,7 +10,6 @@ const pressStart2P = Press_Start_2P({
   display: 'swap',
 })
 
-// VT323 is NOT a variable font — weight must be specified
 const vt323 = VT323({
   weight: '400',
   subsets: ['latin'],
@@ -30,7 +29,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${pressStart2P.variable} ${vt323.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
