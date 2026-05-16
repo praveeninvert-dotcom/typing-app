@@ -8,6 +8,7 @@ interface UseCountdownOptions {
 interface UseCountdownReturn {
   timeLeft: number
   start: () => void
+  stop: () => void
   reset: () => void
   pause: () => void
   resume: () => void
@@ -50,6 +51,13 @@ export function useCountdown({ onComplete }: UseCountdownOptions): UseCountdownR
     setTimeLeft(TIMER_DURATION)
   }, [])
 
+  const stop = useCallback(() => {
+    if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
+    }
+  }, [])
+
   const pause = useCallback(() => {
     pausedRef.current = true
   }, [])
@@ -58,5 +66,5 @@ export function useCountdown({ onComplete }: UseCountdownOptions): UseCountdownR
     pausedRef.current = false
   }, [])
 
-  return { timeLeft, start, reset, pause, resume }
+  return { timeLeft, start, stop, reset, pause, resume }
 }

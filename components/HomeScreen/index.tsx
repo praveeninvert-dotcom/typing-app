@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import type { Difficulty } from '@/types'
 import { DifficultySelector } from '@/components/DifficultySelector'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useUISound } from '@/hooks/useUISound'
 import styles from './HomeScreen.module.css'
 
 const containerVariants = {
@@ -26,9 +27,16 @@ interface HomeScreenProps {
 export function HomeScreen({ onStart }: HomeScreenProps) {
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty | null>(null)
   const reducedMotion = useReducedMotion()
+  const { playSelect, playStart } = useUISound()
+
+  const handleDifficultyChange = (d: Difficulty) => {
+    playSelect()
+    setSelectedDifficulty(d)
+  }
 
   const handleStart = () => {
     if (selectedDifficulty !== null) {
+      playStart()
       onStart(selectedDifficulty)
     }
   }
@@ -63,7 +71,7 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
       <motion.div variants={activeItemVariants}>
         <DifficultySelector
           value={selectedDifficulty}
-          onChange={setSelectedDifficulty}
+          onChange={handleDifficultyChange}
         />
       </motion.div>
 

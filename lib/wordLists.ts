@@ -1,55 +1,53 @@
 // Structure change: instead of flat word arrays, each difficulty
 // has 3 paragraph sets. generateText.ts picks one at random per test run.
 //
-// Easy:   common words, clean prose, no special characters
-// Medium: normal English prose, apostrophes, commas, periods
-// Hard:   technical content, numbers, special characters, symbols
-
+// Easy:   plain prose, no punctuation, common vocabulary, universally relatable themes
+// Medium: natural English with apostrophes, commas, periods — engaging topics anyone cares about
+// Hard:   special characters and numbers appear through cooking, sports, space, email
+//         — not through developer tooling
+ 
 export type Difficulty = 'easy' | 'medium' | 'hard'
-
-// Each entry is one complete paragraph set for a test run.
-// generateText will pick one at random and split into words.
-
+ 
 export const paragraphs: Record<Difficulty, string[]> = {
   easy: [
-    // Set 1 — nature and routine
-    `the sun came up slow over the green hills and the birds began to call one by one the old man sat on his porch with a cup of tea and watched the light move down the slope of the yard his dog lay at his feet and did not stir the road in front of the house was still and no cars had come by yet he liked this time best when the world had not yet made up its mind about the day`,
-
-    // Set 2 — learning and growth
-    `to get good at a thing you have to do it many times and not give up when it feels hard at first your hands will not know what to do and your mind will feel slow but if you keep at it each day the work will start to feel light you will not need to think about each step the way you did when you were new it will just come and that is when the real fun starts`,
-
-    // Set 3 — city and people
-    `the shop on the end of the lane had been there for as long as she could think back the man who ran it knew all the names of all the kids who came in for sweets on the way home from school he would ask about their day and most of them would stop to talk he kept the place clean and the shelves were full and the light was warm and on cold days you could smell the bread from the place next door`,
-
-    // Set 4 — work and focus
-    `she sat down at her desk and put her phone in the drawer and did not look at it for two hours she had learned that the best work came in the first part of the day when the mind was clear and the tasks felt less like tasks and more like things she just wanted to do the rest of the world could wait and most of the time it did`,
+    // Set 1 — coffee and mornings
+    `the smell of coffee in the morning is one of those small things that can shift the whole tone of a day before it has even begun some people grind the beans fresh each time and some just press a button on a machine by the sink but the cup in the hand the warmth through the mug and the first sip in the quiet that part is the same for most of us and it is enough to make even a hard week feel like it has a soft edge to it`,
+ 
+    // Set 2 — rain
+    `rain does something to a room when it falls hard outside the light inside goes softer and the sounds from the street grow dull and far away it is easier to sit still on days like that to stay where you are and let the world outside do its thing some people find it sad but most who love it say it feels like the world is giving them a reason to slow down and they are glad for the excuse to take it`,
+ 
+    // Set 3 — cooking for someone
+    `there is a reason people cook for each other when things get hard it is one of the oldest ways to say that you care and that you want the person across from you to feel well a meal made by hand takes time and time is the thing most of us feel we never have enough of so to spend it on someone else is a kind of gift that does not need a bow or a card to land the way it should`,
+ 
+    // Set 4 — music and memory
+    `music has a way of reaching back into years you thought you had left behind a song can bring back a room a face a feeling with more force than a photo can a photo shows you what things looked like but a song can remind you what they felt like and that is a different kind of memory one that lives in the chest not just in the eyes and it can catch you off guard when you least expect it`,
   ],
-
+ 
   medium: [
-    // Set 1 — engineering and systems
-    `She hadn't expected the server to crash on a Tuesday, but here they were at two in the morning, reading stack traces and drinking cold coffee. The codebase was old, full of hacks that nobody remembered writing. "It works, don't touch it," was the unofficial motto. Jake scrolled through the logs, eyes half-closed, and found the culprit: a race condition they'd known about for months but never fixed. They always meant to get around to it.`,
-
-    // Set 2 — design thinking
-    `Good design isn't about making things look nice, though that matters too. It's about understanding the person who'll use what you're building, then making choices that serve them well. Every button, every label, every empty state tells a story. When users don't read the documentation, it's usually because the interface failed them first. The best designs feel invisible — they just work, and nobody stops to wonder why. That invisibility is the whole point.`,
-
-    // Set 3 — typing and practice
-    `Typing is a skill, and like all skills, it rewards deliberate practice. You don't get faster by trying to go fast; you get faster by slowing down enough to be accurate, then letting speed follow naturally. Your fingers already know where the keys are — your job is to get out of the way. Watch your error rate, not your WPM. Accuracy compounds over weeks, and consistency beats raw speed every time. Trust the process.`,
-
-    // Set 4 — creativity and constraints
-    `Some of the best ideas come from working inside tight constraints. When you can't do everything, you're forced to figure out what actually matters. A writer with a word limit finds the sentence she would've cut. A designer with one colour finds the contrast she would've hidden behind decoration. Constraints don't kill creativity — they focus it. The blank canvas with infinite options is often the hardest place to start.`,
+    // Set 1 — cities at night
+    `Every city has a version of itself that only exists at night. The streets belong to different people: the ones finishing late shifts, the ones starting early ones, the ones who just aren't ready to go home yet. There's an honesty to it. People walk faster, talk quieter, and notice more. The same block you rush past at noon turns into something worth pausing for at midnight, if you're patient enough to let it.`,
+ 
+    // Set 2 — reading
+    `Reading a book you love is one of the few experiences that genuinely slows time down. You lose track of where you are. The room gets darker and you don't notice until you're squinting. People call it escapism, as though that's a flaw. But choosing where your mind goes and what it lingers on isn't running away. It's one of the more deliberate things a person can do with an afternoon, and it costs almost nothing.`,
+ 
+    // Set 3 — travel
+    `The best part of arriving somewhere new isn't the famous landmark or the food you've read about. It's the walk between things — the wrong turn that puts you on a street nobody photographed, the café you picked because it was raining, not because it was rated. Planned trips give you the things you expected. The unplanned moments give you the story you'll actually tell when you get back home.`,
+ 
+    // Set 4 — how habits form
+    `Most people don't change their lives through big decisions. They change them through small, repeated choices they barely notice making. The person who reads every night before bed doesn't decide to become a reader. They just reach for a book instead of a phone one evening, then again the next. Identity follows behavior, not the other way around. You don't build the habit because you are that person — you become that person because you built the habit.`,
   ],
-
+ 
   hard: [
-    // Set 1 — developer tooling
-    `Run \`npm install --save-dev typescript@5.3.2\` and add a \`tsconfig.json\` with \`"strict": true\`. Your first error will probably be "Object is possibly 'undefined'" — that's the point. TypeScript isn't punishing you; it's showing you 47 places where your JavaScript was lying. Fix them one by one: add null checks, type guards, and proper interfaces. When \`grep -r 'any' src/\` returns 0 results, you're done. Ship it.`,
-
-    // Set 2 — database and performance
-    `CPU usage spiked to 94% at 03:17:42 UTC — exactly 15 minutes after the cron job ran. The query \`SELECT * FROM events WHERE created_at > NOW() - INTERVAL '7 days'\` was missing an index on \`created_at\`. Adding \`CREATE INDEX CONCURRENTLY idx_events_created ON events(created_at DESC)\` dropped p99 latency from 4,200ms to 38ms. Always run \`EXPLAIN ANALYZE\` before shipping queries on tables with 10M+ rows.`,
-
-    // Set 3 — config and infrastructure
-    `The \`config.yaml\` expects values like \`rate_limit: 1000/min\` and \`retry_backoff: [0.5, 1.0, 2.5, 5.0]\`. Environment variables override file settings: \`APP_MAX_CONNECTIONS=50\` and \`APP_TIMEOUT_MS=3000\`. Note: boolean flags must be lowercase (\`true\`, not \`True\` or \`TRUE\`). Secrets go in \`.env\` — never in \`config.yaml\`. Run \`./scripts/validate-config.sh --env=production\` before deploying to catch type mismatches early.`,
-
-    // Set 4 — algorithms and complexity
-    `A hash map lookup is O(1) average but O(n) worst case — collision chains are the reason. If your load factor exceeds 0.75, resize: allocate a new array of size 2n+1, rehash all keys. For 1,000,000 entries at 8 bytes/key + 8 bytes/value, expect ~16MB before overhead. Prefer \`Map<K, V>\` over plain objects: it preserves insertion order, handles non-string keys, and exposes \`.size\` without \`Object.keys(x).length\`. Benchmark with \`console.time('lookup')\` and \`console.timeEnd('lookup')\`.`,
+    // Set 1 — sports records (everyone knows sports)
+    `Usain Bolt ran 100 meters in 9.58 seconds on August 16, 2009 — a world record that still stands. At peak velocity, he reached 44.72 km/h (27.8 mph). The average person covers the same distance in 13–17 seconds. Bolt's stride length measured 2.44 meters; his cadence, 4.28 strides/second. Statistics like these don't just describe athletic performance — they reframe what the word "human" is allowed to mean.`,
+ 
+    // Set 2 — space (universally fascinating)
+    `The Moon sits 384,400 km from Earth on average — close enough that light covers the gap in 1.28 seconds. The Sun? 149.6 million km away: 8 minutes, 20 seconds at light speed. Proxima Centauri, the nearest star beyond our solar system, is 4.24 light-years out. A signal sent today wouldn't arrive until 2029. Space isn't just large; the numbers involved require you to completely rethink what "far" and "soon" even mean.`,
+ 
+    // Set 3 — recipe with real measurements
+    `Preheat the oven to 200°C (392°F). Combine 250g plain flour, 1 tsp baking powder, and ½ tsp salt. In a second bowl, whisk 2 eggs with 120ml whole milk and 60ml vegetable oil. Fold the wet mix into the dry — don't overmix. Pour into a greased 23cm tin and bake for 22–25 minutes. A skewer at the centre should come out clean. Cool on a rack for at least 10 minutes before serving.`,
+ 
+    // Set 4 — email (everyone writes email)
+    `Subject: Re: Q3 wrap-up — action items attached. Hi all, following up on Thursday's call. Three things due by Nov 30: (1) finalize the slide deck, (2) confirm the budget at $4,200–$4,800, and (3) send RSVPs to events@venue.com. Headcount cap is 35; we're at 28 confirmed. Reply-all if you have blockers. Notes from the call are at: docs.team.com/q3-notes. Thanks — P.`,
   ],
 }

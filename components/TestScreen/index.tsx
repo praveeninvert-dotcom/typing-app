@@ -6,6 +6,7 @@ import { TIMER_DURATION } from '@/lib/constants'
 import { useTypingEngine } from '@/hooks/useTypingEngine'
 import { useCountdown } from '@/hooks/useCountdown'
 import { useKeystrokeSound } from '@/hooks/useKeystrokeSound'
+import { useUISound } from '@/hooks/useUISound'
 import { StatsBar } from '@/components/StatsBar'
 import { TextDisplay } from '@/components/TextDisplay'
 import styles from './TestScreen.module.css'
@@ -38,6 +39,7 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
   const prevWordIndexRef = useRef(0)
   // Sound always on — no UI toggle
   const { playCorrect, playIncorrect } = useKeystrokeSound()
+  const { playEscape, playConfirmQuit, playCancelQuit } = useUISound()
 
   // Compute result from engine state and elapsed time
   const computeResult = useCallback(
@@ -70,18 +72,7 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
     onStart: () => {
       countdown.start()
     },
-    onFinish: () => {
-      // Word list exhausted — compute result
-      const elapsed = TIMER_DURATION - countdown.timeLeft
-      onFinish(
-        computeResult(
-          engine.correctChars,
-          engine.incorrectChars,
-          elapsed || 1,
-          engine.totalTypedChars
-        )
-      )
-    },
+    onFinish: () => {},
   })
 
   // Keep a ref to engine values for the countdown onComplete closure
@@ -89,6 +80,16 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
   useEffect(() => {
     engineRef.current = engine
   }, [engine])
+
+  // Word list exhausted before timer — freeze timer and show result immediately
+  useEffect(() => {
+    if (!engine.finished) return
+    countdown.stop()
+    const elapsed = TIMER_DURATION - countdown.timeLeft
+    onFinish(
+      computeResult(engine.correctChars, engine.incorrectChars, elapsed || 1, engine.totalTypedChars)
+    )
+  }, [engine.finished]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Auto-focus input on mount
   useEffect(() => {
@@ -142,7 +143,8 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
           setQuitting(false)
           countdown.resume()
           inputRef.current?.focus()
-        } else if (engine.started && !engine.finished) {
+        } else if (!engine.finished) {
+          playEscape()
           setQuitting(true)
           countdown.pause()
           // Focus YES button after state update
@@ -180,7 +182,7 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
 
       engine.handleKey(key)
     },
-    [engine, quitting, countdown, playCorrect, playIncorrect]
+    [engine, quitting, countdown, playCorrect, playIncorrect, playEscape]
   )
 
   const handleContainerClick = useCallback(() => {
@@ -280,7 +282,7 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
               <button
                 ref={yesButtonRef}
                 className={styles.quitButton}
-                onClick={() => { setQuitting(false); onQuit() }}
+                onClick={() => { playConfirmQuit(); setQuitting(false); onQuit() }}
                 type="button"
               >
                 {'[ YES ]'}
@@ -288,7 +290,7 @@ export function TestScreen({ difficulty, onFinish, onQuit }: TestScreenProps) {
               <button
                 ref={noButtonRef}
                 className={styles.quitButton}
-                onClick={() => { setQuitting(false); countdown.resume(); inputRef.current?.focus() }}
+                onClick={() => { playCancelQuit(); setQuitting(false); countdown.resume(); inputRef.current?.focus() }}
                 type="button"
               >
                 {'[ NO ]'}

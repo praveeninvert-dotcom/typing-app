@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import type { ResultState } from '@/types'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useUISound } from '@/hooks/useUISound'
 import styles from './ResultOverlay.module.css'
 
 const backdropVariants = {
@@ -77,6 +78,7 @@ interface ResultOverlayProps {
 
 export function ResultOverlay({ result, onRetry, onHome }: ResultOverlayProps) {
   const reducedMotion = useReducedMotion()
+  const { playStart, playCancelQuit } = useUISound()
   const retryButtonRef = useRef<HTMLButtonElement>(null)
   const homeButtonRef = useRef<HTMLButtonElement>(null)
   const [announced, setAnnounced] = useState(false)
@@ -204,7 +206,7 @@ export function ResultOverlay({ result, onRetry, onHome }: ResultOverlayProps) {
             ref={retryButtonRef}
             className={styles.button}
             data-testid="retry-button"
-            onClick={onRetry}
+            onClick={() => { playStart(); onRetry() }}
             type="button"
           >
             RETRY
@@ -213,7 +215,7 @@ export function ResultOverlay({ result, onRetry, onHome }: ResultOverlayProps) {
             ref={homeButtonRef}
             className={styles.button}
             data-testid="home-button"
-            onClick={onHome}
+            onClick={() => { playCancelQuit(); onHome() }}
             type="button"
           >
             HOME
