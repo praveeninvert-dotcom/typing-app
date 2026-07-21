@@ -65,7 +65,10 @@ export function HomeScreen({ onStart }: HomeScreenProps) {
       </motion.div>
 
       <motion.div variants={activeItemVariants}>
-        <p className={styles.subtitle}>SELECT DIFFICULTY</p>
+        <div className={styles.description}>
+          <p className={styles.descriptionLine}>Test your typing speed and accuracy.</p>
+          <p className={styles.descriptionLine}>Pick a difficulty and see your WPM.</p>
+        </div>
       </motion.div>
 
       <motion.div variants={activeItemVariants}>

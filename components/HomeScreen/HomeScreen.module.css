@@ -35,9 +35,18 @@
   line-height: 1;
 }
 
-.subtitle {
-  font-family: var(--font-press-start);
-  font-size: 12px;
+.description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.descriptionLine {
+  font-family: var(--font-vt323);
+  font-size: 22px;
+  line-height: 1.25;
+  text-align: center;
   color: var(--color-amber-dim);
   margin: 0;
 }
